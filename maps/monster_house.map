@@ -1,0 +1,340 @@
+[grid]
+  size: (65 x 47)
+  encodings: LAVA(L) PLANK(p) GRASS(g) TREE(T) TREES(E) FLOWER(f) WALL(W)
+    ROCK(R) LILY(l) FENCE(F) WATER(Z) HUSK(H) HUSKS(I) ROAD(r) HOUSE(h)
+    REED(D) SIGN(S) ALGAE(A) TILE(t) TOWER (G) GATE(Y)
+    BRICK(K) DOOR(O) RUBBLE(Q) CLIFF(c) BOG(o) BOLT(B) SPIKE(s) STATUE(U) GEM(M)
+  data: """
+  WWWWWWWWWWWWLLLLLWWWWWWWWWWWWWWWWWWWWWWWWWWLLLLLWWWWWWWWWWWWWWWWW
+  W                                          LLLLLDZZZZZZZZZZZZZZZW
+  W                                          LLLLL  ZZZZZZZZZZcZZZW
+  W                                ss         LLL         ZZZZZZZZW
+  W                           ss   ss          L             ZZZZZW
+  W                           sssssss                         ZZZZW
+  W                              s ss                         ZZZZW
+  W                             ssssss          T             lZZZW
+  W                             ssssssss WWW     E          TEZZZAW
+  W                                        WWWW                ttUW
+  W     WWWW                     WWWWWWWW     WWW             WUtUW
+  W     W   WW                   W   WWWWWWWWW                WUtUW
+  W WWWWWBW                      W                            WUtUW
+  W      WWWWWWWWWWWWWWWWWWWWWWWWW                            WUtUW
+  W                                        ftt               WUttUW
+  W                                         tt              WUttUWW
+  W             h                                        WWWWUtttUW
+  W            FF FFFF                                   WMMWUtttUW
+  W              rrrrr                                   WMMWUtttUW
+  W                                                      WMMWUtttUW
+  W                                   D                  WWOWUtttUW
+  WR       DDD     EETET             DZZZl              WUtttUtttUW
+  WWWWWWWWWWWWWWWYWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWUtttUtttUW
+  W                                              f      WUtttUtttUW
+  W             S                                       WUtttUtttUW
+  W                                                     WUtttUtttUW
+  W                                                      HttttttttW
+  WUUUU                              IH                  IItttttttW
+  WWWWU                             IH                            W
+  W  U                                 I                          W
+  W                                                               W
+  W  U                                                            W
+  W  WU                    E                                      W
+  WWWWU                    hEE                                    W
+  WUUUU                                          WWWWWWWWWtWWWWWWWW
+  W                                              WttttttttttttttttW
+  W                                    g         WttttttttttttttttW
+  W                                     g        WttttttttttttttttW
+  W        FFFFF                                 WttttttttttttttttW
+  W        F                       WWWWWWWWWWOWWWWttttttttttttttttW
+  W        F    F                  WttttttttttttttttttttttttttttttW
+  W        F    F                  WttttttttttttttttttttttttttttttW
+  W        FFFFFQ                  WttttttttttttttttttttttttttttttW
+  W                                YttttttttttttttttttttttttttttttW
+  W                                WttttttttttttttttttttttttttttttW
+  WW                               WttttttttttttttttttttttttttttttW
+  WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+  """
+
+[element]
+  name: fluffy
+  player: true
+  skin: BABA
+  position: (5,5)
+  health: 10
+
+[element]
+  name: durendale
+  skin: SWORD
+  position: (1,29)
+  kind: item
+  damage: 15
+
+[element]
+  name: key
+  skin: KEY
+  position: (63,8)
+  kind: item
+
+[element]
+  name: waldo
+  skin: CRAB
+  position: (38, 24)
+  kind: enemy
+  health: 10
+  zone: (38, 24) (10 x 8)
+  behavior: stroll
+  damage: 5
+
+[element]
+  name: uoy
+  skin: BADBAD
+  position: (11, 5)
+  kind: enemy
+  health: 30
+  zone: (12, 5) (11 x 4)
+  behavior: stroll
+  damage: 4
+
+[element]
+  name: uoyuoy
+  skin: BADBAD
+  position: (11, 6)
+  kind: enemy
+  health: 30
+  zone: (12, 6) (11 x 5)
+  behavior: stroll
+  damage: 4
+
+[element]
+  name: uoyuoyuoy
+  skin: BADBAD
+  position: (12, 6)
+  kind: enemy
+  health: 30
+  zone: (11, 6) (10 x 5)
+  behavior: stroll
+  damage: 4
+
+[element]
+  name: ud
+  skin: BADBAD
+  position: (4, 5)
+  kind: enemy
+  health: 30
+  zone: (5, 5) (4 x 4)
+  behavior: stroll
+  damage: 4
+
+[element]
+  name: udud
+  skin: BADBAD
+  position: (1, 9)
+  kind: enemy
+  health: 30
+  zone: (1, 10) (0 x 9)
+  behavior: stroll
+  damage: 4
+
+[element]
+  name: one
+  skin: SPIKE
+  position: (31, 1)
+  kind: enemy
+  health: 3000
+  damage: 10
+
+[element]
+  name: two
+  skin: SPIKE
+  position: (32, 1)
+  kind: enemy
+  health: 3000
+  damage: 10
+
+[element]
+  name: three
+  skin: SPIKE
+  position: (32, 1)
+  kind: enemy
+  health: 30000
+  damage: 10
+
+[element]
+  name: four
+  skin: SPIKE
+  position: (32, 2)
+  kind: enemy
+  health: 3000
+  damage: 10
+
+[element]
+  name: five
+  skin: SPIKE
+  position: (32, 3)
+  kind: enemy
+  health: 3000
+  damage: 1
+
+[element]
+  name: six
+  skin: SPIKE
+  position: (31, 6)
+  kind: enemy
+  health: 300000
+  damage: 10
+
+[element]
+  name: seven
+  skin: SPIKE
+  position: (37, 8)
+  kind: enemy
+  health: 300000
+  damage: 10
+
+[element]
+  name: Bruuce
+  skin: MONSTER
+  position: (54, 11)
+  kind: enemy
+  health: 3000
+  zone: (53, 10) (3 x 5)
+  behavior: stroll
+  damage: 3
+
+[element]
+  name: modla
+  skin: CRAB
+  position: (16, 24)
+  kind: enemy
+  health: 15
+  zone: (15, 24) (10 x 8)
+  behavior: stroll
+  damage: 5
+
+[element]
+  name: piano
+  skin: PIANO
+  position: (63,38)
+  kind: obstacle
+
+[element]
+  name: chair
+  skin: CHAIR
+  position: (54,40)
+  kind: obstacle
+[element]
+  name: chair
+  skin: CHAIR
+  position: (52,40)
+  kind: obstacle
+[element]
+  name: chair
+  skin: CHAIR
+  position: (54,44)
+  kind: obstacle
+[element]
+  name: chair
+  skin: CHAIR
+  position: (52,44)
+  kind: obstacle
+
+[element]
+  name: table
+  skin: TABLE
+  position: (51,41)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (52,41)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (53,41)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (54,41)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (55,41)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (51,43)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (52,43)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (53,43)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (54,43)
+  kind: obstacle
+[element]
+  name: table
+  skin: TABLE
+  position: (55,43)
+  kind: obstacle
+
+[element]
+  name: statue
+  skin: STATUE
+  position: (44,40)
+  kind: obstacle
+[element]
+  name: statue
+  skin: STATUE
+  position: (42,40)
+  kind: obstacle
+
+[element]
+  name: statue
+  skin: STATUE
+  position: (34,42)
+  kind: obstacle
+[element]
+  name: statue
+  skin: STATUE
+  position: (34,44)
+  kind: obstacle
+
+[element]
+  name: statue
+  skin: STATUE
+  position: (55,35)
+  kind: obstacle
+[element]
+  name: statue
+  skin: STATUE
+  position: (57,35)
+  kind: obstacle
+
+[element]
+  name: bed
+  skin: BED
+  position: (38,45)
+  kind: obstacle
+[element]
+  name: bed
+  skin: BED
+  position: (41,45)
+  kind: obstacle
+[element]
+  name: bed
+  skin: BED
+  position: (44,45)
+  kind: obstacle
+
+

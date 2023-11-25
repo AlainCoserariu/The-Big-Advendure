@@ -1,4 +1,4 @@
-package fr.uge.Main;
+package fr.uge.main;
 
 import java.awt.Color;
 import java.awt.geom.Ellipse2D;
