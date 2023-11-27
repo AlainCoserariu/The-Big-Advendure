@@ -13,7 +13,7 @@ public interface Entity {
   void setHealth(int health);
   
   default public boolean verif_move(Vector2D vector) {
-  	if(getPosX() + vector.vx() < 0 || getPosX() + vector.vx() > 1920 || getPosY() + vector.vy() < 0 || getPosY() + vector.vy() > 1920)
+  	if(getPosX() + vector.vx() < 0 || getPosX() + vector.vx() > 1920 || getPosY() + vector.vy() < 0 || getPosY() + vector.vy() > 1080)
   		return false;
   	else 
   		return true;
