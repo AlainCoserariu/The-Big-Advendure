@@ -1,35 +1,17 @@
 package fr.uge.main;
 
 import java.awt.Color;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
+import fr.uge.entity.player.Player;
+import fr.uge.utils.Vector2D;
+import fr.uge.weapon.Sword;
 import fr.umlv.zen5.Application;
-import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
 import fr.umlv.zen5.Event.Action;
+import fr.umlv.zen5.KeyboardKey;
 
 public class Main {
-
-  static class Area {
-    private Ellipse2D.Float ellipse = new Ellipse2D.Float(0, 0, 0, 0);
-
-    void draw(ApplicationContext context, float x, float y) {
-      context.renderFrame(graphics -> {
-        // hide the previous rectangle
-        graphics.setColor(Color.ORANGE);
-        graphics.fill(ellipse);
-
-        // show a new ellipse at the position of the pointer
-        graphics.setColor(Color.MAGENTA);
-        ellipse = new Ellipse2D.Float(x - 20, y - 20, 40, 40);
-        graphics.fill(ellipse);
-      });
-    }
-  }
-
   public static void main(String[] args) {
     Application.run(Color.ORANGE, context -> {
 
@@ -38,30 +20,53 @@ public class Main {
       float width = screenInfo.getWidth();
       float height = screenInfo.getHeight();
       System.out.println("size of the screen (" + width + " x " + height + ")");
-
+      Player p = new Player((int)(width/2), 20, 100, 100, 1.2, 1.0, "test", new Sword(10,"DragonSlayer"));
       context.renderFrame(graphics -> {
         graphics.setColor(Color.ORANGE);
         graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+        graphics.setColor(Color.BLUE);
+        graphics.fill(new Rectangle2D.Float((float)p.getPosX(), (float)p.getPosY(), (float)24, (float)24));
       });
-
-      Area area = new Area();
       for (;;) {
         Event event = context.pollOrWaitEvent(10);
         if (event == null) { // no event
           continue;
         }
         Action action = event.getAction();
-        if (action == Action.KEY_PRESSED || action == Action.KEY_RELEASED) {
-          System.out.println("abort abort !");
-          context.exit(0);
-          return;
+        if (action == Action.KEY_PRESSED) {
+        	KeyboardKey key = event.getKey();
+        	Vector2D vect = new Vector2D(0,0);
+        	switch(key) {
+        	case UP -> {
+        		vect = new Vector2D(0, -50) ;
+        	}
+        	case DOWN -> {
+        		vect = new Vector2D(0, 50) ;        	
+        	}
+        	case RIGHT -> {
+        		vect = new Vector2D(50, 0) ;
+        	}
+        	case LEFT -> {
+        		vect = new Vector2D(-50, 0) ;
+        	}
+        	case SPACE -> System.out.println("Ca doit faire une action");
+					default -> {
+						context.exit(0);
+						return;
+						}
+        	}
+        	System.out.println("Pos player avant");
+          System.out.println("(x = "+ p.getPosX() +", y = "+ p.getPosY()+")");
+	        System.out.println("key = " + key);
+	        p.move(vect);
+	        System.out.println("Pos player apres");
+	        System.out.println("(x = "+ p.getPosX() +", y = "+ p.getPosY()+")\n");
+	        context.renderFrame(graphics -> {
+	          graphics.setColor(Color.BLUE);
+	          graphics.fill(new Rectangle2D.Float((float)p.getPosX(), (float)p.getPosY(), (float)24, (float)24));
+	        });
         }
-        System.out.println(event);
-
-        Point2D.Float location = event.getLocation();
-        area.draw(context, location.x, location.y);
       }
     });
   }
-
 }
