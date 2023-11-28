@@ -12,18 +12,9 @@ public interface Entity {
   int getHealth();
   void setHealth(int health);
   
-  default public boolean verif_move(Vector2D vector) {
-  	if(getPosX() + vector.vx() < 0 || getPosX() + vector.vx() > 1920 || getPosY() + vector.vy() < 0 || getPosY() + vector.vy() > 1080)
-  		return false;
-  	else 
-  		return true;
-  }
-  
   default public void move(Vector2D vector) {
-  	if(verif_move(vector)){
-  		setPosX(getPosX() + vector.vx());
-      setPosY(getPosY() + vector.vy());
-  	}
+		setPosX(getPosX() + vector.getVx());
+    setPosY(getPosY() + vector.getVy());
   }
   
   default public void loseHP(int damage) {

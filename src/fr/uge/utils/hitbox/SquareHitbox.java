@@ -3,7 +3,7 @@ package fr.uge.utils.hitbox;
 public final class SquareHitbox implements Hitbox {
   private double centerX;
   private double centerY;
-  private double radius; // Shortest distance between the center and a segment
+  private final double radius; // Shortest distance between the center and a segment
 
   public SquareHitbox(double centerX, double centerY, double radius) {
     if (radius <= 0) {
@@ -49,9 +49,5 @@ public final class SquareHitbox implements Hitbox {
 
   public double getRadius() {
     return radius;
-  }
-
-  public void setRadius(double radius) {
-    this.radius = radius;
   }
 }

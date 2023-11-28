@@ -8,7 +8,6 @@ public sealed interface Hitbox permits SquareHitbox {
   public void setCenterY(double centerY);
 
   public double getRadius();
-  public void setRadius(double radius);
   
   boolean collide(Hitbox hitbox);
 }

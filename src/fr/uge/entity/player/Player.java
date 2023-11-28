@@ -11,17 +11,22 @@ import fr.uge.weapon.Weapon;
 public class Player implements Entity{
   private double posX;
   private double posY;
+  private Direction orientation;  // Cardinal direction the player is facing
+  
   private final Hitbox hitbox;
-  private Direction orientation;  // Direction the player is facing
+
   private int health;
   private int maxHealth;
+  
   private double speed;
   private double defaultSpeed;
+  
   private Weapon weapon;
   private boolean isAttacking;
+  
   private final String name;
   
-  public Player(int posX, int posY, int health, int maxHealth, double speed, double defaultSpeed, String name, Weapon weapon) {
+  public Player(double posX, double posY, int health, int maxHealth, double speed, double defaultSpeed, String name, Weapon weapon) {
     Objects.requireNonNull(name);
     if (maxHealth <= 0) {
       throw new IllegalArgumentException("Health must be greater than 0");
