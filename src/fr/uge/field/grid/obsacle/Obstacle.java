@@ -1,17 +1,21 @@
-package fr.uge.field;
+package fr.uge.field.grid.obsacle;
 
+import fr.uge.field.grid.GridElement;
 import fr.uge.utils.hitbox.Hitbox;
 import fr.uge.utils.hitbox.SquareHitbox;
 
-public class Obstacle implements Element {
+public class Obstacle implements GridElement {
   private final int x;
   private final int y;
   private final Hitbox hitbox;
   
-  public Obstacle(int x, int y) {
+  private final ObstacleEnum type;
+  
+  public Obstacle(int x, int y, ObstacleEnum type) {
     this.x = x;
     this.y = y;
-    
     hitbox = new SquareHitbox(x + 0.5, y + 0.5, 0.5);
+    
+    this.type = type;
   }
 }
