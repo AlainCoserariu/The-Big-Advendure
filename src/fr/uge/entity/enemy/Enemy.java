@@ -10,8 +10,13 @@ public class Enemy implements Entity {
   private double posX;
   private double posY;
   private Direction orientation;
+  
   private int health;
+  private int maxHeatlth;
+  
   private double speed;
+  private double defaultSpeed;
+  
   private final Hitbox hitbox;
   
   public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox) {
@@ -49,5 +54,13 @@ public class Enemy implements Entity {
 
   public void setHealth(int health) {
     this.health = health;
+  }
+
+  public double getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(double speed) {
+    this.speed = speed;
   }
 }

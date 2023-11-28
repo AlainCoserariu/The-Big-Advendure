@@ -23,7 +23,7 @@ public class Main {
       float height = screenInfo.getHeight();
 
       System.out.println("size of the screen (" + width + " x " + height + ")");
-      Player p = new Player((int) (width / 2), 20, 100, 100, 1.2, 1.0, "test", new Sword(10, "DragonSlayer"));
+      Player p = new Player((int) (width / 2), 20, 100, 100, 30, 30, "test", new Sword(10, "DragonSlayer"));
 
       context.renderFrame(graphics -> {
         graphics.setColor(Color.DARK_GRAY);
@@ -40,19 +40,19 @@ public class Main {
           Action action = event.getAction();
           if (action == Action.KEY_PRESSED) {
             KeyboardKey key = event.getKey();
-            Vector2D vect = new Vector2D(10, 0);
+            Vector2D vect = new Vector2D(0, 0);
             switch (key) {
             case UP -> {
-              vect = new Vector2D(0, -50);
+              vect = vect.add(new Vector2D(0, -1));
             }
             case DOWN -> {
-              vect = new Vector2D(0, 50);
+              vect = vect.add(new Vector2D(0, 1));
             }
             case RIGHT -> {
-              vect = new Vector2D(50, 0);
+              vect = vect.add(new Vector2D(1, 0));
             }
             case LEFT -> {
-              vect = new Vector2D(-50, 0);
+              vect = vect.add(new Vector2D(-1, 0));
             }
             case SPACE -> System.out.println("Ca doit faire une action");
             default -> {

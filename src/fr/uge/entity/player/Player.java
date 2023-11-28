@@ -71,4 +71,12 @@ public class Player implements Entity{
   public void setPosY(double posY) {
     this.posY = posY;
   }
+
+  public double getSpeed() {
+    return speed;
+  }
+
+  public void setSpeed(double speed) {
+    this.speed = speed;
+  }
 }

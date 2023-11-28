@@ -12,9 +12,11 @@ public interface Entity {
   int getHealth();
   void setHealth(int health);
   
+  double getSpeed();
+  
   default public void move(Vector2D vector) {
-		setPosX(getPosX() + vector.getVx());
-    setPosY(getPosY() + vector.getVy());
+		setPosX(getPosX() + vector.scale(getSpeed()).vx());
+    setPosY(getPosY() + vector.scale(getSpeed()).vy());
   }
   
   default public void loseHP(int damage) {
