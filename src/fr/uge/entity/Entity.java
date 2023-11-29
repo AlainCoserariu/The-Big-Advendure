@@ -15,7 +15,7 @@ public interface Entity {
   double getSpeed();
   
   default public void move(Vector2D vector) {
-		setPosX(getPosX() + vector.scale(getSpeed()).vx());
+	setPosX(getPosX() + vector.scale(getSpeed()).vx());
     setPosY(getPosY() + vector.scale(getSpeed()).vy());
   }
   

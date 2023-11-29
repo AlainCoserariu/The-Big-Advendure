@@ -1,5 +1,7 @@
-package fr.uge.field;
+package fr.uge.field.decoration;
 
-public record Decoration(int x, int y) implements Element {
+import fr.uge.field.grid.GridElement;
+
+public record Decoration(int x, int y) implements  GridElement{
   
 }

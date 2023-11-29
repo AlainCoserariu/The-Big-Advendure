@@ -55,6 +55,7 @@ public class Main {
               vect = vect.add(new Vector2D(-1, 0));
             }
             case SPACE -> System.out.println("Ca doit faire une action");
+            case I -> System.out.println("inventaire");
             default -> {
               context.exit(0);
               return;

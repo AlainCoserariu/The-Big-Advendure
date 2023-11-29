@@ -18,8 +18,9 @@ public class Enemy implements Entity {
   private double defaultSpeed;
   
   private final Hitbox hitbox;
+  private String name;
   
-  public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox) {
+  public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox, String name) {
     Objects.requireNonNull(hitbox);
     if (speed < 0) {
       throw new IllegalArgumentException("Cant't have negative speed");
@@ -30,6 +31,7 @@ public class Enemy implements Entity {
     this.orientation = orientation;
     this.speed = speed;
     this.hitbox = hitbox;
+    this.name = name;
   }
 
   public double getPosX() {

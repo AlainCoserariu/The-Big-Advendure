@@ -14,6 +14,12 @@ public class Panel {
   private final Grid grid;
   
   public Panel(Path mapFile) {
+    // Ouvrir le fichier map
+      // Tant qu'il reste des éléments à parser : 
+        // Sépare le prochain bloc [grid ou elt]
+          // Appelle à la fonction correspondent au bloc
+    
+    
     player = null;
     listEnemy = null;
     itemList = null;

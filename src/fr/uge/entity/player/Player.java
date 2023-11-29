@@ -20,7 +20,7 @@ public class Player implements Entity{
   
   private double speed;
   private double defaultSpeed;
-  
+ 
   private Weapon weapon;
   private boolean isAttacking;
   
