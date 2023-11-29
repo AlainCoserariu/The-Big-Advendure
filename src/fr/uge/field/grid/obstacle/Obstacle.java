@@ -1,4 +1,4 @@
-package fr.uge.field.grid.obsacle;
+package fr.uge.field.grid.obstacle;
 
 import fr.uge.field.grid.GridElement;
 import fr.uge.utils.hitbox.Hitbox;

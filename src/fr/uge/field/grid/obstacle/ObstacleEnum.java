@@ -1,4 +1,4 @@
-package fr.uge.field.grid.obsacle;
+package fr.uge.field.grid.obstacle;
 
 public enum ObstacleEnum {
   BED,  
