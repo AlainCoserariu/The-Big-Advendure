@@ -41,6 +41,6 @@ public class Panel {
   public static void main(String[] args) throws IOException {
     // var panel = new Panel(Path.of("big.map"));
     
-    Panel panel = new Panel(Path.of("big.map"));
+    Panel panel = new Panel(Path.of("maps").resolve("basic_map.map"));
   }
 }
