@@ -3,80 +3,64 @@ package fr.uge.entity.player;
 import java.util.Objects;
 
 import fr.uge.entity.Entity;
-import fr.uge.utils.Direction;
-import fr.uge.utils.hitbox.Hitbox;
-import fr.uge.utils.hitbox.SquareHitbox;
-import fr.uge.weapon.Weapon;
 
-public class Player implements Entity{
-  private double posX;
-  private double posY;
-  private Direction orientation;  // Cardinal direction the player is facing
-  
-  private final Hitbox hitbox;
+public class Player {
+  private final Entity player;
+  private final SkinPlayer skin;
 
-  private int health;
-  private int maxHealth;
-  
-  private double speed;
-  private double defaultSpeed;
- 
-  private Weapon weapon;
-  private boolean isAttacking;
-  
-  private final String name;
-  
-  public Player(double posX, double posY, int health, int maxHealth, double speed, double defaultSpeed, String name, Weapon weapon) {
+  /**
+   * Player constructor
+   * 
+   * @param x
+   * @param y
+   * @param speed
+   * @param maxHealth
+   * @param name
+   */
+  public Player(double x, double y, double speed, int maxHealth, String name, SkinPlayer skin) {
     Objects.requireNonNull(name);
-    if (maxHealth <= 0) {
-      throw new IllegalArgumentException("Health must be greater than 0");
-    }
     
-    this.posX = posX;
-    this.posY = posY;
-    this.maxHealth = maxHealth;
-    this.health = maxHealth;
-    this.speed = speed;
-    this.defaultSpeed = defaultSpeed;
-    isAttacking = false;
-    this.weapon = weapon;
-    this.hitbox = new SquareHitbox(posX, posY, 0.5);
-    this.name = name;
+    player = new Entity(x, y, speed, maxHealth, name);
+    this.skin = skin;
   }
   
-  public int getHealth() {
-    return health;
+  public void move(double x, double y) {
+    player.move(x, y);
   }
 
-  public void setHealth(int health) {
-    this.health = health;
+  public void takeDamage(int damage) {
+    player.takeDamage(damage);
   }
 
-  @Override
-  public double getPosX() {
-    return posX;
-  }
-  
-  @Override
-  public void setPosX(double posX) {
-    this.posX = posX;
+  public void heal(int healPoint) {
+    player.heal(healPoint);
   }
 
-  @Override
-  public double getPosY() {
-    return posY;
+  public double getX() {
+    return player.getX();
   }
 
-  @Override
-  public void setPosY(double posY) {
-    this.posY = posY;
+  public double getY() {
+    return player.getY();
   }
 
   public double getSpeed() {
-    return speed;
+    return player.getSpeed();
   }
 
-  public void setSpeed(double speed) {
-    this.speed = speed;
+  public int hashCode() {
+    return player.hashCode();
+  }
+
+  public boolean equals(Object obj) {
+    return player.equals(obj);
+  }
+
+  public String toString() {
+    return player.toString();
+  }
+  
+  public SkinPlayer getSkin() {
+    return skin;
   }
 }

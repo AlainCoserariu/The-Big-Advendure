@@ -1,12 +1,14 @@
 package fr.uge.main;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.util.concurrent.TimeUnit;
 
 import fr.uge.entity.player.Player;
-import fr.uge.utils.Vector2D;
-import fr.uge.weapon.Sword;
+import fr.uge.entity.player.SkinPlayer;
+import fr.uge.fieldElement.obstacle.Obstacle;
+import fr.uge.fieldElement.obstacle.ObstacleEnum;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.ScreenInfo;
@@ -16,43 +18,52 @@ import fr.umlv.zen5.KeyboardKey;
 public class Main {
   public static void main(String[] args) {
     Application.run(Color.DARK_GRAY, context -> {
+      // Games options
+      int framerate = 60;
+      int tileSize = 24;
 
       // get the size of the screen
       ScreenInfo screenInfo = context.getScreenInfo();
       float width = screenInfo.getWidth();
       float height = screenInfo.getHeight();
 
+      var player = new Player(0.5, 0.5, 10, 100, "baba", SkinPlayer.BABA);
+      var obstacle = new Obstacle(1.5, 1.5, ObstacleEnum.BRICK);
+
       System.out.println("size of the screen (" + width + " x " + height + ")");
-      Player p = new Player((int) (width / 2), 20, 100, 100, 30, 30, "test", new Sword(10, "DragonSlayer"));
 
       context.renderFrame(graphics -> {
         graphics.setColor(Color.DARK_GRAY);
         graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+        
         graphics.setColor(Color.BLUE);
-        graphics.fill(new Rectangle2D.Float((float) p.getPosX(), (float) p.getPosY(), (float) 24, (float) 24));
+        graphics.fill(new Rectangle2D.Double(player.getX() * tileSize - tileSize / 2, player.getY() * tileSize - tileSize / 2, tileSize, tileSize));
+        
+        graphics.setColor(Color.RED);
+        graphics.fill(new Rectangle2D.Double(obstacle.getX() * tileSize - tileSize / 2, obstacle.getY() * tileSize - tileSize / 2, tileSize, tileSize));
       });
 
       for (int frame = 0; true; frame++) {
+        
+        // Event handler
         Event event = context.pollEvent();
-        System.out.println("Frame : " + frame);
         if (event != null) { // Key detection
 
           Action action = event.getAction();
           if (action == Action.KEY_PRESSED) {
             KeyboardKey key = event.getKey();
-            Vector2D vect = new Vector2D(0, 0);
             switch (key) {
             case UP -> {
-              vect = vect.add(new Vector2D(0, -1));
+              player.move(0, -player.getSpeed() / framerate);
             }
             case DOWN -> {
-              vect = vect.add(new Vector2D(0, 1));
+              player.move(0, player.getSpeed() / framerate);
             }
             case RIGHT -> {
-              vect = vect.add(new Vector2D(1, 0));
+              player.move(player.getSpeed() / framerate, 0);
             }
             case LEFT -> {
-              vect = vect.add(new Vector2D(-1, 0));
+              player.move(-player.getSpeed() / framerate, 0);
             }
             case SPACE -> System.out.println("Ca doit faire une action");
             case I -> System.out.println("inventaire");
@@ -61,18 +72,12 @@ public class Main {
               return;
             }
             }
-
-            System.out.println("Pos player avant");
-            System.out.println("(x = " + p.getPosX() + ", y = " + p.getPosY() + ")");
-            System.out.println("key = " + key);
-            p.move(vect);
-            System.out.println("Pos player apres");
-            System.out.println("(x = " + p.getPosX() + ", y = " + p.getPosY() + ")\n");
           }
         }
-
+        
+        // Time sleeper
         try {
-          TimeUnit.MILLISECONDS.sleep(1000 / 60);
+          TimeUnit.MILLISECONDS.sleep(1000 / framerate);
         } catch (InterruptedException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -82,8 +87,12 @@ public class Main {
         context.renderFrame(graphics -> {
           graphics.setColor(Color.DARK_GRAY);
           graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+          
           graphics.setColor(Color.BLUE);
-          graphics.fill(new Rectangle2D.Float((float) p.getPosX(), (float) p.getPosY(), (float) 24, (float) 24));
+          graphics.fill(new Rectangle2D.Double(player.getX() * tileSize - tileSize / 2, player.getY() * tileSize - tileSize / 2, tileSize, tileSize));
+          
+          graphics.setColor(Color.RED);
+          graphics.fill(new Rectangle2D.Double(obstacle.getX() * tileSize - tileSize / 2, obstacle.getY() * tileSize - tileSize / 2, tileSize, tileSize));
         });
       }
     });

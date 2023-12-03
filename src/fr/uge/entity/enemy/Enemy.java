@@ -3,66 +3,70 @@ package fr.uge.entity.enemy;
 import java.util.Objects;
 
 import fr.uge.entity.Entity;
-import fr.uge.utils.Direction;
-import fr.uge.utils.hitbox.Hitbox;
+import fr.uge.utility.movementZone.MovementZone;
 
-public class Enemy implements Entity {
-  private double posX;
-  private double posY;
-  private Direction orientation;
-  
-  private int health;
-  private int maxHeatlth;
-  
-  private double speed;
-  private double defaultSpeed;
-  
-  private final Hitbox hitbox;
-  private String name;
-  
-  public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox, String name) {
-    Objects.requireNonNull(hitbox);
-    if (speed < 0) {
-      throw new IllegalArgumentException("Cant't have negative speed");
-    }
-    
-    this.posX = posX;
-    this.posY = posY;
-    this.orientation = orientation;
-    this.speed = speed;
-    this.hitbox = hitbox;
-    this.name = name;
+public class Enemy {
+  private final Entity enemy;
+  private final SkinEnemy skin;
+  private final MovementZone zone;
+  private final BehaviorEnum behavior;
+
+  /**
+   * Enemy constructor
+   * 
+   * @param x
+   * @param y
+   * @param speed
+   * @param maxHealth
+   * @param name
+   */
+  public Enemy(double x, double y, double speed, int maxHealth, String name, SkinEnemy skin, MovementZone zone,
+      BehaviorEnum behavior) {
+    Objects.requireNonNull(name);
+
+    enemy = new Entity(x, y, speed, maxHealth, name);
+    this.skin = skin;
+    this.zone = zone;
+    this.behavior = behavior;
   }
 
-  public double getPosX() {
-    return posX;
+  public void move(double x, double y) {
+    enemy.move(x, y);
   }
 
-  public void setPosX(double posX) {
-    this.posX = posX;
+  public void takeDamage(int damage) {
+    enemy.takeDamage(damage);
   }
 
-  public double getPosY() {
-    return posY;
+  public void heal(int healPoint) {
+    enemy.heal(healPoint);
   }
 
-  public void setPosY(double posY) {
-    this.posY = posY;
+  public double getX() {
+    return enemy.getX();
   }
 
-  public int getHealth() {
-    return health;
-  }
-
-  public void setHealth(int health) {
-    this.health = health;
+  public double getY() {
+    return enemy.getY();
   }
 
   public double getSpeed() {
-    return speed;
+    return enemy.getSpeed();
   }
 
-  public void setSpeed(double speed) {
-    this.speed = speed;
+  public int hashCode() {
+    return enemy.hashCode();
+  }
+
+  public boolean equals(Object obj) {
+    return enemy.equals(obj);
+  }
+
+  public String toString() {
+    return enemy.toString();
+  }
+
+  public SkinEnemy getSkin() {
+    return skin;
   }
 }
