@@ -65,10 +65,9 @@ public class Parser {
    * Fill the map following the encoding and the data
    * 
    * @param encoding
-   * @param width
-   * @param height
+   * @param data
    */
-  private void parseMapData(String encoding, String data, int width, int height) {
+  private void parseMapData(String encoding, String data) {
     var encodingCorrespondence = parserEncoding(encoding);
 
     // Help to make correspondence between the data and the structure
@@ -83,10 +82,10 @@ public class Parser {
     // Read through the whole data to implement the obstacles and decorations
     int x = 0;
     int y = 0;
-    for (int reader = 4; reader < data.length(); reader++) {
+    for (int reader = 5; reader < data.length(); reader++) {
       if (encodingCorrespondence.containsKey(Character.toString(data.charAt(reader)))) {
         // Check if we need to initialize an obstacle or a decoration
-        if (obstacle.contains(encodingCorrespondence.get(Character.toString(data.charAt(reader))))) {          
+        if (obstacle.contains(encodingCorrespondence.get(Character.toString(data.charAt(reader))))) {      
           field[y][x] = new Obstacle(x + 0.5, y + 0.5,
               ObstacleEnum.valueOf(encodingCorrespondence.get(Character.toString(data.charAt(reader)))));
         } else if (decoration.contains(encodingCorrespondence.get(Character.toString(data.charAt(reader))))) {
@@ -98,6 +97,12 @@ public class Parser {
       } else if (data.charAt(reader) == '\n') {
         y++;
         x = 0;
+        reader++;
+        // Skipping spaces
+        while (data.charAt(reader) == ' ') {
+          reader++;
+        }
+        reader--;
       } else {
         x++;
       }
@@ -130,10 +135,9 @@ public class Parser {
    */
   private void parseGrid(Map<String, String> elements) {
     var dimension = parseNumbers(elements.get("size"));
-
+    
     field = new FieldElement[dimension.get(1)][dimension.get(0)];
-
-    parseMapData(elements.get("encoding"), elements.get("data"), dimension.get(1), dimension.get(0));
+    parseMapData(elements.get("encoding"), elements.get("data"));
   }
 
   /**

@@ -1,6 +1,6 @@
 [grid]
   size: (65 x 47)
-  encodings: LAVA(L) PLANK(p) GRASS(g) TREE(T) TREES(E) FLOWER(f) WALL(W)
+  encoding: LAVA(L) PLANK(p) GRASS(g) TREE(T) TREES(E) FLOWER(f) WALL(W)
     ROCK(R) LILY(l) FENCE(F) WATER(Z) HUSK(H) HUSKS(I) ROAD(r) HOUSE(h)
     REED(D) SIGN(S) ALGAE(A) TILE(t) TOWER (G)
     BRICK(K) DOOR(O) RUBBLE(Q) CLIFF(c) BOG(o)
@@ -81,6 +81,16 @@
   kind: enemy
   health: 10
   zone: (38, 24) (10 x 8)
+  behavior: stroll
+  damage: 5
+
+[element]
+  name: wuldo
+  skin: CRAB
+  position: (37, 24)
+  kind: enemy
+  health: 10
+  zone: (37, 24) (10 x 8)
   behavior: stroll
   damage: 5
 

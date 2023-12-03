@@ -33,8 +33,13 @@ public class Obstacle implements FieldElement {
   public double getY() {
     return y;
   }
-
+  
   public ObstacleEnum getType() {
     return type;
   }
+
+	@Override
+	public boolean IsObstacle() {
+		return true;
+	}
 }

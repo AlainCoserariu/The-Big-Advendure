@@ -41,7 +41,7 @@ public class Entity {
     
     this.name = name;
   }
-
+  
   public void move(double x, double y) {
     this.x += x;
     this.y += y;
@@ -68,5 +68,4 @@ public class Entity {
   public double getSpeed() {
     return speed;
   }
-
 }
