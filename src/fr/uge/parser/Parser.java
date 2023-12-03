@@ -152,12 +152,12 @@ public class Parser {
     var skin = List.of(skinTmp);
 
     if (skin.contains(player.get("skin"))) {
-      this.player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 3, Integer.parseInt(player.get("health")),
+      this.player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 10, Integer.parseInt(player.get("health")),
           player.get("name"), SkinPlayer.valueOf(player.get("skin")));
     } else {
       System.out.println("Can't detecte player skin, apply default skin (BABA)");
 
-      this.player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 3, Integer.parseInt(player.get("health")),
+      this.player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 10, Integer.parseInt(player.get("health")),
           player.get("name"), SkinPlayer.valueOf("BABA"));
     }
   }
