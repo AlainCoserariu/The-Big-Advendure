@@ -6,4 +6,8 @@ public class Grid {
   public Grid(int width, int height) {
     map = new GridElement[height][width];
   }
+
+	public GridElement[][] getList() {
+		return map;
+	}
 }

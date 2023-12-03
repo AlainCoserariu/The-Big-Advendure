@@ -14,8 +14,10 @@ public interface Entity {
   
   double getSpeed();
   
+  /* Fonction récupérant l'image à afficher de l'entité*/
+  String getSkin();
   default public void move(Vector2D vector) {
-	setPosX(getPosX() + vector.scale(getSpeed()).vx());
+  	setPosX(getPosX() + vector.scale(getSpeed()).vx());
     setPosY(getPosY() + vector.scale(getSpeed()).vy());
   }
   

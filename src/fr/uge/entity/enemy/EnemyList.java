@@ -14,4 +14,7 @@ public class EnemyList {
     Objects.requireNonNull(enemy);
     enemies.add(enemy);
   }
+  public ArrayList<Enemy> getList(){
+  	return enemies;
+  }
 }

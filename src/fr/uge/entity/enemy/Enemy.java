@@ -19,8 +19,9 @@ public class Enemy implements Entity {
   
   private final Hitbox hitbox;
   private String name;
+  private String skin;
   
-  public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox, String name) {
+  public Enemy(int posX, int posY, Direction orientation, int speed, Hitbox hitbox, String name, String skin) {
     Objects.requireNonNull(hitbox);
     if (speed < 0) {
       throw new IllegalArgumentException("Cant't have negative speed");
@@ -32,6 +33,7 @@ public class Enemy implements Entity {
     this.speed = speed;
     this.hitbox = hitbox;
     this.name = name;
+    this.skin = skin;
   }
 
   public double getPosX() {
@@ -65,4 +67,9 @@ public class Enemy implements Entity {
   public void setSpeed(double speed) {
     this.speed = speed;
   }
+
+	@Override
+	public String getSkin() {
+		return skin.toLowerCase();
+	}
 }

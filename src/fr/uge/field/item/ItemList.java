@@ -13,4 +13,8 @@ public class ItemList implements Item {
     java.util.Objects.requireNonNull(item);
     items.add(item);
   }
+
+	public ArrayList<Item> getList() {
+		return items;
+	}
 }

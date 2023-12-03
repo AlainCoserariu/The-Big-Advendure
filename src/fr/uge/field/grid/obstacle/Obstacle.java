@@ -18,4 +18,14 @@ public class Obstacle implements GridElement {
     
     this.type = type;
   }
+
+	@Override
+	public String getFileName() {
+		return type.name().toLowerCase();
+	}
+
+	@Override
+	public boolean IsObstacle() {
+		return true;
+	}
 }

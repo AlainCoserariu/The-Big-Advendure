@@ -25,8 +25,9 @@ public class Player implements Entity{
   private boolean isAttacking;
   
   private final String name;
+  private final String skin;
   
-  public Player(double posX, double posY, int health, int maxHealth, double speed, double defaultSpeed, String name, Weapon weapon) {
+  public Player(double posX, double posY, int health, int maxHealth, double speed, double defaultSpeed, String name, Weapon weapon, String skin) {
     Objects.requireNonNull(name);
     if (maxHealth <= 0) {
       throw new IllegalArgumentException("Health must be greater than 0");
@@ -42,8 +43,8 @@ public class Player implements Entity{
     this.weapon = weapon;
     this.hitbox = new SquareHitbox(posX, posY, 0.5);
     this.name = name;
+    this.skin = skin;
   }
-  
   public int getHealth() {
     return health;
   }
@@ -79,4 +80,8 @@ public class Player implements Entity{
   public void setSpeed(double speed) {
     this.speed = speed;
   }
+	@Override
+	public String getSkin() {
+		return skin.toLowerCase();
+	}
 }
