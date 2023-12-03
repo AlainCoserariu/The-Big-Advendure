@@ -25,6 +25,7 @@ public class Main {
   public static void main(String[] args) throws IOException{
   	Panel panel = new Panel(Path.of("maps").resolve("fun.map"));
   	var player = panel.player;
+  	var images = AllDisplay.loadImage();
     Application.run(Color.DARK_GRAY, context -> {
       // Games options
       int framerate = 60;
@@ -40,7 +41,7 @@ public class Main {
 
       for (int frame = 0; true; frame++) {
       	try {
-					AllDisplay.allDisplay(panel, context);
+					AllDisplay.allDisplay(panel, images, context);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
