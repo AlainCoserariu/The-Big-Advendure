@@ -7,12 +7,11 @@ import java.util.Map;
 
 import fr.uge.entity.enemy.Enemy;
 
-/*Fonction permettant d'afficher tous les ennemis*/
 public class DisplayEnemy {
 	public static void displayEnemy(List<Enemy> list, Map<String, BufferedImage> images, Graphics2D graphics) {
 		list.forEach(enemy -> {
 			graphics.drawImage(images.get(enemy.getSkin().toString()), null,
-					(int) enemy.getX(), (int) enemy.getY());
+					(int) (enemy.getX() * 24) - 12, (int) (enemy.getY() * 24) - 12); // 24 is the size of an image
 		});
 	}
 }

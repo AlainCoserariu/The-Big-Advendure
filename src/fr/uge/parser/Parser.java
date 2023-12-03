@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -52,7 +53,7 @@ public class Parser {
     var matcher = pattern.matcher(encoding);
 
     while (matcher.find()) {
-      var key = matcher.group();
+      var key = matcher.group().toUpperCase(Locale.ROOT);
       matcher.find();
       var value = matcher.group();
       res.put(value, key);

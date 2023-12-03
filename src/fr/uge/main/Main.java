@@ -50,16 +50,16 @@ public class Main {
             KeyboardKey key = event.getKey();
             switch (key) {
             case UP -> {
-              panel.player.move(0, -panel.player.getSpeed() * tileSize / framerate);
+              panel.player.move(0, -panel.player.getSpeed() / framerate);
             }
             case DOWN -> {
-              panel.player.move(0, panel.player.getSpeed() * tileSize / framerate);
+              panel.player.move(0, panel.player.getSpeed() / framerate);
             }
             case RIGHT -> {
-              panel.player.move(panel.player.getSpeed() * tileSize / framerate, 0);
+              panel.player.move(panel.player.getSpeed() / framerate, 0);
             }
             case LEFT -> {
-              panel.player.move(-panel.player.getSpeed() * tileSize / framerate, 0);
+              panel.player.move(-panel.player.getSpeed() / framerate, 0);
             }
             case SPACE -> System.out.println("Ca doit faire une action");
             case I -> System.out.println("inventaire");
@@ -68,10 +68,10 @@ public class Main {
               return;
             }
             }
+            
+            System.out.println(panel.player.getX());
           }
         }
-        
-        System.out.println(panel.player.getX());
         
         // Time sleeper
         try {
