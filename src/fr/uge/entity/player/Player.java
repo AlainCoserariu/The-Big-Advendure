@@ -3,6 +3,7 @@ package fr.uge.entity.player;
 import java.util.Objects;
 
 import fr.uge.entity.Entity;
+import fr.uge.fieldElement.FieldElement;
 
 public class Player {
   private final Entity player;
@@ -34,6 +35,10 @@ public class Player {
 
   public void heal(int healPoint) {
     player.heal(healPoint);
+  }
+  
+  public boolean collideWithObstacle(FieldElement element) {
+    return player.collideWithObstacle(element);
   }
 
   public double getX() {

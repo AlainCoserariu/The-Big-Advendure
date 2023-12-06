@@ -1,5 +1,7 @@
 package fr.uge.utility.hitboxe;
 
+import fr.uge.fieldElement.FieldElement;
+
 public class Hitbox {
   private double leftX;
   private double rightX;

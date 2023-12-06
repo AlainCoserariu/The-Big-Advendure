@@ -3,6 +3,7 @@ package fr.uge.entity.enemy;
 import java.util.Objects;
 
 import fr.uge.entity.Entity;
+import fr.uge.fieldElement.FieldElement;
 import fr.uge.utility.movementZone.MovementZone;
 
 public class Enemy {
@@ -40,6 +41,10 @@ public class Enemy {
 
   public void heal(int healPoint) {
     enemy.heal(healPoint);
+  }
+  
+  public boolean collideWithObstacle(FieldElement element) {
+    return enemy.collideWithObstacle(element);
   }
 
   public double getX() {

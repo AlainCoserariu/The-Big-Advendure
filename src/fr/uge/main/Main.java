@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import fr.uge.display.AllDisplay;
+import fr.uge.fieldElement.FieldElement;
 import fr.uge.gameParameter.GameParameter;
+import fr.uge.interaction.Interact;
 import fr.uge.panel.Panel;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.Event;
@@ -56,6 +58,8 @@ public class Main {
           Action action = event.getAction();
           if (action == Action.KEY_PRESSED) {
             KeyboardKey key = event.getKey();
+            double beforeX = panel.player.getX();
+            double beforeY = panel.player.getY();
             switch (key) {
             case UP -> {
               panel.player.move(0, -panel.player.getSpeed() / gameParameters.getFramerate());
@@ -76,6 +80,7 @@ public class Main {
               return;
             }
             }
+            Interact.collisionAfterNextMove(beforeX, beforeY, panel.player, panel.getField()[(int) panel.player.getY()][(int) panel.player.getX()]);
           }
         }
         

@@ -2,6 +2,7 @@ package fr.uge.entity;
 
 import java.util.Objects;
 
+import fr.uge.fieldElement.FieldElement;
 import fr.uge.utility.hitboxe.Hitbox;
 
 public class Entity {
@@ -56,7 +57,15 @@ public class Entity {
   public void heal(int healPoint) {
     health = Integer.max(health + healPoint, maxHealth);
   }
-
+  
+  public boolean collideWithObstacle(FieldElement element) {
+    Objects.requireNonNull(element);
+    if(element.IsObstacle()) {
+      return hitbox.collide(element.getHitbox());
+    }
+    return false;
+  }
+  
   public double getX() {
     return x;
   }

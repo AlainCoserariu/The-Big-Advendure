@@ -6,10 +6,10 @@ import fr.uge.utility.hitboxe.Hitbox;
 public class Obstacle implements FieldElement {
   private final double x;
   private final double y;
-  
+
   private final ObstacleEnum type;
-  
-  public final Hitbox hitbox;
+
+  private final Hitbox hitbox;
 
   /**
    * Obstacle constructor
@@ -22,7 +22,7 @@ public class Obstacle implements FieldElement {
     this.x = x;
     this.y = y;
     this.type = type;
-    
+
     hitbox = new Hitbox(x, y, 1);
   }
 
@@ -33,13 +33,18 @@ public class Obstacle implements FieldElement {
   public double getY() {
     return y;
   }
-  
+
   public ObstacleEnum getType() {
     return type;
   }
 
-	@Override
-	public boolean IsObstacle() {
-		return true;
-	}
+  @Override
+  public boolean IsObstacle() {
+    return true;
+  }
+
+  @Override
+  public Hitbox getHitbox() {
+    return hitbox;
+  }
 }
