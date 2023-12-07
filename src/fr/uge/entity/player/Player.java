@@ -6,7 +6,7 @@ import fr.uge.entity.Entity;
 import fr.uge.fieldElement.FieldElement;
 
 public class Player {
-  private final Entity player;
+  public final Entity player;
   private final SkinPlayer skin;
 
   /**
@@ -67,5 +67,13 @@ public class Player {
   
   public SkinPlayer getSkin() {
     return skin;
+  }
+
+  public int getHealth() {
+    return player.getHealth();
+  }
+  
+  public int getMaxHealth() {
+    return player.getMaxHealth();
   }
 }

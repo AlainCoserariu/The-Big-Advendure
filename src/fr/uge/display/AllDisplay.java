@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import fr.uge.entity.Entity;
 import fr.uge.entity.enemy.Enemy;
 import fr.uge.entity.player.Player;
 import fr.uge.fieldElement.FieldElement;
@@ -40,7 +41,7 @@ public class AllDisplay {
           (int) (enemy.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
     });
   }
-  
+
   /**
    * Display field obstacles and decorations
    * 
@@ -61,7 +62,7 @@ public class AllDisplay {
       }
     }
   }
-  
+
   /**
    * Display the player
    * 
@@ -73,8 +74,22 @@ public class AllDisplay {
   private static void displayPlayer(Player p, Map<String, BufferedImage> images, Graphics2D graphics,
       GameParameter parameters) {
     graphics.drawImage(images.get(p.getSkin().toString()), null,
-        (int) (p.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
-        (int) (p.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
+        (int) (p.getX() * parameters.getTileSize() - parameters.getTileSize() / 2),
+        (int) (p.getY() * parameters.getTileSize() - parameters.getTileSize() / 2));
+  }
+
+  private static void displayHeal(Entity entity, Map<String, BufferedImage> images, Graphics2D graphics,
+      GameParameter parameters) {
+    int maxHealthPixel = parameters.getTileSize();
+    System.out.println(maxHealthPixel);
+    graphics.setColor(Color.red);
+    var rectMaxHeal = new Rectangle2D.Double((entity.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
+        (entity.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2, maxHealthPixel, 6);
+    graphics.fill(rectMaxHeal);
+    graphics.setColor(Color.green);
+    var rectHeal = new Rectangle2D.Double((entity.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
+        (entity.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2,  entity.getHealth() * maxHealthPixel / entity.getMaxHealth(), 6);
+    graphics.fill(rectHeal);
   }
   
   /**
@@ -85,17 +100,21 @@ public class AllDisplay {
    * @param context
    * @param parameters
    */
-  public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context, GameParameter parameters) {
+  public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context,
+      GameParameter parameters) {
     context.renderFrame(graphics -> {
       graphics.setColor(Color.DARK_GRAY);
       graphics.fill(new Rectangle2D.Float(0, 0, parameters.getWindowWidth(), parameters.getWindowHeight()));
 
       displayField(pan.getField(), images, graphics, parameters);
-      displayPlayer(pan.player, images, graphics, parameters);
       displayEnemy(pan.getEnemies(), images, graphics, parameters);
+      displayPlayer(pan.player, images, graphics, parameters);
+      displayHeal(pan.player.player, images, graphics, parameters);
+      for(int i = 0; i < pan.getEnemies().size(); i++)
+        displayHeal(pan.getEnemies().get(i).getEntity(), images, graphics, parameters);
     });
   }
-
+  
   /**
    * Load all images in resources folder
    * 
@@ -109,7 +128,7 @@ public class AllDisplay {
             .toString().substring(0, s.getFileName().toString().length() - 4).toUpperCase(Locale.ROOT), s -> {
               try {
                 return ImageIO.read(s.toFile());
-                
+
               } catch (IOException e) {
                 e.printStackTrace();
               }

@@ -20,7 +20,7 @@ import fr.uge.fieldElement.decoration.Decoration;
 import fr.uge.fieldElement.decoration.DecorationEnum;
 import fr.uge.fieldElement.obstacle.Obstacle;
 import fr.uge.fieldElement.obstacle.ObstacleEnum;
-import fr.uge.utility.movementZone.MovementZone;
+import fr.uge.utility.Zone.Zone;
 
 public class Parser {
   public Player player;
@@ -188,7 +188,7 @@ public class Parser {
       return;
     }
 
-    MovementZone zone = new MovementZone(zoneTmp.get(0), zoneTmp.get(1), zoneTmp.get(0) + zoneTmp.get(2),
+    Zone zone = new Zone(zoneTmp.get(0), zoneTmp.get(1), zoneTmp.get(0) + zoneTmp.get(2),
         zoneTmp.get(1) + zoneTmp.get(3));
     var res = new Enemy(pos.get(0) + 0.5, pos.get(1) + 0.5, 2, Integer.parseInt(monster.get("health")),
         monster.get("name"), SkinEnemy.valueOf(monster.get("skin")), zone,

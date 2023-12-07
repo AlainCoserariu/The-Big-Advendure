@@ -40,7 +40,6 @@ public class Main {
         System.exit(1);
         return;
       }
-      
       System.out.println("size of the screen (" + gameParameters.getWindowWidth() + " x " + gameParameters.getWindowHeight() + ")");
 
       for (int frame = 0; true; frame++) {
@@ -58,20 +57,24 @@ public class Main {
           Action action = event.getAction();
           if (action == Action.KEY_PRESSED) {
             KeyboardKey key = event.getKey();
-            double beforeX = panel.player.getX();
-            double beforeY = panel.player.getY();
+            double beforeX = 0;
+            double beforeY = 0;
             switch (key) {
             case UP -> {
               panel.player.move(0, -panel.player.getSpeed() / gameParameters.getFramerate());
+              beforeY = panel.player.getSpeed() / gameParameters.getFramerate();
             }
             case DOWN -> {
               panel.player.move(0, panel.player.getSpeed() / gameParameters.getFramerate());
+              beforeY = -panel.player.getSpeed() / gameParameters.getFramerate();
             }
             case RIGHT -> {
               panel.player.move(panel.player.getSpeed() / gameParameters.getFramerate(), 0);
+              beforeX = -panel.player.getSpeed() / gameParameters.getFramerate();
             }
             case LEFT -> {
               panel.player.move(-panel.player.getSpeed() / gameParameters.getFramerate(), 0);
+              beforeX = panel.player.getSpeed() / gameParameters.getFramerate();
             }
             case SPACE -> System.out.println("Ca doit faire une action");
             case I -> System.out.println("inventaire");
@@ -80,7 +83,7 @@ public class Main {
               return;
             }
             }
-            Interact.collisionAfterNextMove(beforeX, beforeY, panel.player, panel.getField()[(int) panel.player.getY()][(int) panel.player.getX()]);
+            Interact.collisionAfterNextMove(beforeX, beforeY, panel);
           }
         }
         
@@ -88,6 +91,7 @@ public class Main {
         try {
           TimeUnit.MILLISECONDS.sleep((long) (1000 / gameParameters.getFramerate() - (System.nanoTime() - time) * 0.000001));
         } catch (InterruptedException e) {}
+        panel.getEnemies().forEach(enemy -> {enemy.randomMove(panel.getField(), gameParameters);});    
        
         
       }

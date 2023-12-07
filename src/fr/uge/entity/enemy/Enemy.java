@@ -4,12 +4,13 @@ import java.util.Objects;
 
 import fr.uge.entity.Entity;
 import fr.uge.fieldElement.FieldElement;
-import fr.uge.utility.movementZone.MovementZone;
+import fr.uge.gameParameter.GameParameter;
+import fr.uge.utility.Zone.Zone;
 
 public class Enemy {
   private final Entity enemy;
   private final SkinEnemy skin;
-  private final MovementZone zone;
+  private final Zone zone;
   private final BehaviorEnum behavior;
 
   /**
@@ -21,7 +22,7 @@ public class Enemy {
    * @param maxHealth
    * @param name
    */
-  public Enemy(double x, double y, double speed, int maxHealth, String name, SkinEnemy skin, MovementZone zone,
+  public Enemy(double x, double y, double speed, int maxHealth, String name, SkinEnemy skin, Zone zone,
       BehaviorEnum behavior) {
     Objects.requireNonNull(name);
 
@@ -73,5 +74,20 @@ public class Enemy {
 
   public SkinEnemy getSkin() {
     return skin;
+  }
+
+  public int getMaxHealth() {
+    return enemy.getMaxHealth();
+  }
+  
+  public int getHealth() {
+    return enemy.getHealth();
+  }
+  
+  public Entity getEntity() {
+    return enemy;
+  }
+  public void randomMove(FieldElement[][] field, GameParameter parameters){
+    enemy.randomMove(field, parameters);
   }
 }
