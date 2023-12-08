@@ -15,6 +15,8 @@ public class BaseEntity {
   private int maxHealth;
 
   public final Hitbox hitbox;
+  
+  public final int iframeDuration;  // Number of invincibility frames after taking damage
 
   private final String name;
 
@@ -39,6 +41,8 @@ public class BaseEntity {
     
     this.maxHealth = maxHealth;
     this.health = maxHealth;
+    
+    iframeDuration = 60;
     
     this.name = name;
   }

@@ -5,17 +5,16 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import fr.uge.display.AllDisplay;
+import fr.uge.entity.player.SkinPlayer;
 import fr.uge.gameParameter.GameParameter;
 import fr.uge.panel.Panel;
 import fr.uge.userEvent.UserEvent;
 import fr.umlv.zen5.Application;
-import fr.umlv.zen5.Event;
-import fr.umlv.zen5.Event.Action;
-import fr.umlv.zen5.KeyboardKey;
 import fr.umlv.zen5.ScreenInfo;
 
 public class Main {
@@ -56,7 +55,9 @@ public class Main {
         // Event handler
       	userInput.handleEvent(panel, gameParameters, context);
         
+      	// PROTOTYPE Debug variable, compute the time elapsed since the start of the frame, help to keep track of performances
       	var calcTime = (System.nanoTime() - time) / 1000000;
+      	
         // Time sleeper, wait  1/framerate - time since the start of the frame 
         try {
           TimeUnit.MILLISECONDS.sleep((long) (1000 / gameParameters.getFramerate() - (System.nanoTime() - time) / 1000000));

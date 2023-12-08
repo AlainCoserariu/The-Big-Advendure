@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -71,41 +72,24 @@ public class Parser {
   private void parseMapData(String encoding, String data) {
     var encodingCorrespondence = parserEncoding(encoding);
 
-    // Help to make correspondence between the data and the structure
-    String[] obstaclesTmp = new String[] { "BED", "BOG", "BOMB", "BRICK", "CHAIR", "CLIFF", "DOOR", "FENCE", "FORT",
-        "GATE", "HEDGE", "HOUSE", "HUSK", "HUSKS", "LOCK", "MONITOR", "PIANO", "PILLAR", "PIPE", "ROCK", "RUBBLE",
-        "SHELL", "SIGN", "SPIKE", "STATUE", "STUMP", "TABLE", "TOWER", "TREE", "TREES", "WALL" };
-    String[] decorationsTmp = new String[] { "ALGAE", "CLOUD", "FLOWER", "FOLIAGE", "GRASS", "LADDER", "LILY", "PLANK",
-        "REED", "ROAD", "SPROUT", "TILE", "TRACK", "VINE" };
-    var obstacle = List.of(obstaclesTmp);
-    var decoration = List.of(decorationsTmp);
+    var obstacles = Arrays.stream(ObstacleEnum.values()).map(Enum::toString).toList();
+    var decorations = Arrays.stream(DecorationEnum.values()).map(Enum::toString).toList();
 
-    // Read through the whole data to implement the obstacles and decorations
-    int x = 0;
-    int y = 0;
-    for (int reader = 5; reader < data.length(); reader++) {
-      if (encodingCorrespondence.containsKey(Character.toString(data.charAt(reader)))) {
-        // Check if we need to initialize an obstacle or a decoration
-        if (obstacle.contains(encodingCorrespondence.get(Character.toString(data.charAt(reader))))) {      
-          field[y][x] = new Obstacle(x + 0.5, y + 0.5,
-              ObstacleEnum.valueOf(encodingCorrespondence.get(Character.toString(data.charAt(reader)))));
-        } else if (decoration.contains(encodingCorrespondence.get(Character.toString(data.charAt(reader))))) {
-          field[y][x] = new Decoration(x + 0.5, y + 0.5,
-              DecorationEnum.valueOf(encodingCorrespondence.get(Character.toString(data.charAt(reader)))));
+    // Separates lines to parse the map
+    String lines[] = data.replaceAll("\"", "").stripIndent().lines().skip(1).toArray(String[]::new);
+    
+    for (int y = 0; y < lines.length; y++) {
+      for (int x = 0; x < lines[0].length(); x++) {
+        String character = Character.toString(lines[y].charAt(x));
+        if (encodingCorrespondence.containsKey(character)) {
+          
+          // Check if we need to initialize an obstacle or a decoration
+          if (obstacles.contains(encodingCorrespondence.get(character))) {
+            field[y][x] = new Obstacle(x + 0.5, y + 0.5, ObstacleEnum.valueOf(encodingCorrespondence.get(character)));
+          } else if (decorations.contains(encodingCorrespondence.get(character))) {
+            field[y][x] = new Decoration(x + 0.5, y + 0.5, DecorationEnum.valueOf(encodingCorrespondence.get(character)));
+          }
         }
-
-        x++;
-      } else if (data.charAt(reader) == '\n') {
-        y++;
-        x = 0;
-        reader++;
-        // Skipping spaces
-        while (data.charAt(reader) == ' ') {
-          reader++;
-        }
-        reader--;
-      } else {
-        x++;
       }
     }
   }
@@ -148,11 +132,10 @@ public class Parser {
    */
   private void parsePlayer(Map<String, String> player) {
     var pos = parseNumbers(player.get("position"));
+    
+    var skins = Arrays.stream(SkinPlayer.values()).map(Enum::toString).toList();
 
-    String[] skinTmp = new String[] { "BABA", "BADBAD", "FOFO", "IT" };
-    var skin = List.of(skinTmp);
-
-    if (skin.contains(player.get("skin"))) {
+    if (skins.contains(player.get("skin"))) {
       this.player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 5, Integer.parseInt(player.get("health")),
           player.get("name"), SkinPlayer.valueOf(player.get("skin")));
     } else {
@@ -172,27 +155,25 @@ public class Parser {
     var pos = parseNumbers(monster.get("position"));
     var zoneTmp = parseNumbers(monster.get("zone"));
 
-    String[] skinTmp = new String[] { "BAT", "BEE", "BIRD", "BUG", "BUNNY", "CAT", "CRAB", "DOG", "FISH", "FROG",
-        "GHOST", "JELLY", "JIJI", "KEKE", "LIZARD", "ME", "MONSTER", "ROBOT", "SNAIL", "SKULL", "TEETH", "TURTLE",
-        "WORM" };
-    var skin = List.of(skinTmp);
+    var skins = Arrays.stream(SkinEnemy.values()).map(Enum::toString).toList();
 
-    String[] behaviorTmp = new String[] { "shy", "stroll", "agressive" };
-    var behavior = List.of(behaviorTmp);
+    var behaviors = Arrays.stream(BehaviorEnum.values()).map(Enum::toString).toList();;
 
-    if (!skin.contains(monster.get("skin"))) {
+    if (!skins.contains(monster.get("skin"))) {
       System.err.println("Can't load the monster skin, monster not created");
       return;
-    } else if (!behavior.contains(monster.get("behavior"))) {
+    } else if (!behaviors.contains(monster.get("behavior"))) {
       System.err.println("Can't load the monster behavior, monster not created");
       return;
     }
 
     MovementZone zone = new MovementZone(zoneTmp.get(0), zoneTmp.get(1), zoneTmp.get(0) + zoneTmp.get(2),
         zoneTmp.get(1) + zoneTmp.get(3));
+    
     var res = new Enemy(pos.get(0) + 0.5, pos.get(1) + 0.5, 2, Integer.parseInt(monster.get("health")),
         monster.get("name"), SkinEnemy.valueOf(monster.get("skin")), zone,
         BehaviorEnum.valueOf(monster.get("behavior")));
+    
     enemies.add(res);
   }
 
@@ -210,6 +191,11 @@ public class Parser {
 
   }
 
+  /**
+   * Parse an entire block of data
+   * 
+   * @param elementToParse
+   */
   private void parseElements(ArrayList<Result> elementToParse) {
     // Initialize a Hashmap with all the potential field
     var elements = initElementMap();
@@ -234,7 +220,6 @@ public class Parser {
       }
     }
 
-    // Parse the field
     if (elementToParse.get(1).content().equals("grid")) {
       parseGrid(elements);
     } else if (elementToParse.get(1).content().equals("element")) {
