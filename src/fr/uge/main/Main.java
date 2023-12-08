@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import fr.uge.display.AllDisplay;
 import fr.uge.gameParameter.GameParameter;
 import fr.uge.panel.Panel;
+import fr.uge.userEvent.UserEvent;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
@@ -28,6 +29,9 @@ public class Main {
       // Initialize game data
       GameParameter gameParameters = new GameParameter((int) screenInfo.getWidth(), (int) screenInfo.getHeight(), 60);
       
+      // Initialize input
+      var userInput = new UserEvent();
+      
       // Load images
       Map<String, BufferedImage> images;
       try {
@@ -39,54 +43,35 @@ public class Main {
         return;
       }
       
-      System.out.println("size of the screen (" + gameParameters.getWindowWidth() + " x " + gameParameters.getWindowHeight() + ")");
-
+      var debugInfo = new StringBuilder();
+      
+      // Main loop
       for (int frame = 0; true; frame++) {
         // Get time
         var time = System.nanoTime();
         
         // Display the game
 				AllDisplay.allDisplay(panel, images, context, gameParameters);
-      	
-      	System.out.println("Frame : " + frame);
      
         // Event handler
-        Event event = context.pollEvent();
-        if (event != null) { // Key detection
-          Action action = event.getAction();
-          if (action == Action.KEY_PRESSED) {
-            KeyboardKey key = event.getKey();
-            switch (key) {
-            case UP -> {
-              panel.player.move(0, -panel.player.getSpeed() / gameParameters.getFramerate());
-            }
-            case DOWN -> {
-              panel.player.move(0, panel.player.getSpeed() / gameParameters.getFramerate());
-            }
-            case RIGHT -> {
-              panel.player.move(panel.player.getSpeed() / gameParameters.getFramerate(), 0);
-            }
-            case LEFT -> {
-              panel.player.move(-panel.player.getSpeed() / gameParameters.getFramerate(), 0);
-            }
-            case SPACE -> System.out.println("Ca doit faire une action");
-            case I -> System.out.println("inventaire");
-            default -> {
-              context.exit(0);
-              return;
-            }
-            }
-          }
-        }
+      	userInput.handleEvent(panel, gameParameters, context);
         
-        // Time sleeper, wait  1/60 seconds - time since the start of the frame
+      	var calcTime = (System.nanoTime() - time) / 1000000;
+        // Time sleeper, wait  1/framerate - time since the start of the frame 
         try {
-          TimeUnit.MILLISECONDS.sleep((long) (1000 / gameParameters.getFramerate() - (System.nanoTime() - time) * 0.000001));
+          TimeUnit.MILLISECONDS.sleep((long) (1000 / gameParameters.getFramerate() - (System.nanoTime() - time) / 1000000));
         } catch (InterruptedException e) {}
-       
         
+        // PROTOTYPE Debug display
+        debugInfo.append("Frame : ").append(frame)
+        .append(" Frame duration : ")
+        .append((System.nanoTime() - time) / 1000000)
+        .append("ms Frame Calc time : ")
+        .append(calcTime).append("ms");
+        
+        System.out.println(debugInfo);
+        debugInfo = new StringBuilder();
       }
     });
-    System.out.println("This is the end");
   }
 }

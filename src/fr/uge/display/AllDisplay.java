@@ -2,6 +2,7 @@ package fr.uge.display;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import fr.uge.entity.BaseEntity;
 import fr.uge.entity.enemy.Enemy;
 import fr.uge.entity.player.Player;
 import fr.uge.fieldElement.FieldElement;
@@ -24,6 +26,64 @@ import fr.uge.panel.Panel;
 import fr.umlv.zen5.ApplicationContext;
 
 public class AllDisplay {
+
+  /**
+   * Display the red part of the health bar
+   * 
+   * @param entity
+   * @param graphics
+   * @param parameters
+   */
+  private static void displayRedHealthBar(BaseEntity entity, Graphics2D graphics, GameParameter parameters) {
+    int widthHealthBar = (int) (parameters.getTileSize() * 0.9);
+    int heightHealthBar = (int) (parameters.getTileSize() * 0.2);
+
+    // Top left position of the health bar rectangle
+    int posX = (int) ((entity.getX() * parameters.getTileSize()) - widthHealthBar / 2);
+    int posY = (int) ((entity.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
+
+    var healthBar = new Rectangle(posX, posY, widthHealthBar, heightHealthBar);
+
+    graphics.setColor(Color.RED);
+    graphics.fill(healthBar);
+  }
+
+  /**
+   * Display the green part of the health bar
+   * 
+   * @param entity
+   * @param graphics
+   * @param parameters
+   */
+  private static void displayGreenHealthBar(BaseEntity entity, Graphics2D graphics, GameParameter parameters) {
+    int widthHealthBar = (int) (parameters.getTileSize() * 0.9);
+    int heightHealthBar = (int) (parameters.getTileSize() * 0.2);
+
+    // Removing lost health
+    widthHealthBar = entity.getHealth() * widthHealthBar / entity.getMaxHealth();
+
+    // Top left position of the health bar rectangle
+    int posX = (int) ((entity.getX() * parameters.getTileSize()) - widthHealthBar / 2);
+    int posY = (int) ((entity.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
+
+    var healthBar = new Rectangle(posX, posY, widthHealthBar, heightHealthBar);
+
+    graphics.setColor(Color.GREEN);
+    graphics.fill(healthBar);
+  }
+
+  /**
+   * Display the health bar for an entity with two rectangle, one red representing
+   * lost health and one green representing remaining health
+   * 
+   * @param entity
+   * @param graphics
+   * @param parameters
+   */
+  private static void displayHealthBar(BaseEntity entity, Graphics2D graphics, GameParameter parameters) {
+    displayRedHealthBar(entity, graphics, parameters);
+    displayGreenHealthBar(entity, graphics, parameters);
+  }
 
   /**
    * Display all enemies on the field
@@ -37,11 +97,12 @@ public class AllDisplay {
       GameParameter parameters) {
     list.forEach(enemy -> {
       graphics.drawImage(images.get(enemy.getSkin().toString()), null,
-          (int) (enemy.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
-          (int) (enemy.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
+          (int) (enemy.getX() * parameters.getTileSize() - parameters.getTileSize() / 2),
+          (int) (enemy.getY() * parameters.getTileSize() - parameters.getTileSize() / 2));
+      displayHealthBar(enemy.enemy, graphics, parameters);
     });
   }
-  
+
   /**
    * Display field obstacles and decorations
    * 
@@ -62,7 +123,7 @@ public class AllDisplay {
       }
     }
   }
-  
+
   /**
    * Display the player
    * 
@@ -76,8 +137,9 @@ public class AllDisplay {
     graphics.drawImage(images.get(p.getSkin().toString()), null,
         (int) (p.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
         (int) (p.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
+    displayHealthBar(p.player, graphics, parameters);
   }
-  
+
   /**
    * Display all elements in the game
    * 
@@ -86,7 +148,8 @@ public class AllDisplay {
    * @param context
    * @param parameters
    */
-  public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context, GameParameter parameters) {
+  public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context,
+      GameParameter parameters) {
     context.renderFrame(graphics -> {
       graphics.setColor(Color.DARK_GRAY);
       graphics.fill(new Rectangle2D.Float(0, 0, parameters.getWindowWidth(), parameters.getWindowHeight()));
@@ -110,9 +173,8 @@ public class AllDisplay {
             .toString().substring(0, s.getFileName().toString().length() - 4).toUpperCase(Locale.ROOT), s -> {
               try {
                 return ImageIO.read(s.toFile());
-                
               } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
               }
               return null;
             }));

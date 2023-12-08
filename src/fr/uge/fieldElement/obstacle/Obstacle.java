@@ -9,7 +9,7 @@ public class Obstacle implements FieldElement {
   
   private final ObstacleEnum type;
   
-  public final Hitbox hitbox;
+  private final Hitbox hitbox;
 
   /**
    * Obstacle constructor
@@ -42,4 +42,9 @@ public class Obstacle implements FieldElement {
 	public boolean IsObstacle() {
 		return true;
 	}
+
+  @Override
+  public Hitbox getHitbox() {
+    return hitbox;
+  }
 }

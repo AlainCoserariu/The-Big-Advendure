@@ -2,10 +2,12 @@ package fr.uge.entity.player;
 
 import java.util.Objects;
 
+import fr.uge.entity.BaseEntity;
 import fr.uge.entity.Entity;
+import fr.uge.fieldElement.FieldElement;
 
-public class Player {
-  private final Entity player;
+public class Player implements Entity {
+  public final BaseEntity player;
   private final SkinPlayer skin;
 
   /**
@@ -20,7 +22,7 @@ public class Player {
   public Player(double x, double y, double speed, int maxHealth, String name, SkinPlayer skin) {
     Objects.requireNonNull(name);
     
-    player = new Entity(x, y, speed, maxHealth, name);
+    player = new BaseEntity(x, y, speed, maxHealth, name);
     this.skin = skin;
   }
   
@@ -47,20 +49,23 @@ public class Player {
   public double getSpeed() {
     return player.getSpeed();
   }
-
-  public int hashCode() {
-    return player.hashCode();
-  }
-
-  public boolean equals(Object obj) {
-    return player.equals(obj);
-  }
-
-  public String toString() {
-    return player.toString();
-  }
   
   public SkinPlayer getSkin() {
     return skin;
+  }
+
+  @Override
+  public boolean collideWithObstacle(FieldElement field[][]) {
+    return player.collideWithObstacle(field);
+  }
+
+  @Override
+  public int getHealth() {
+    return player.getHealth();
+  }
+
+  @Override
+  public int getMaxHealth() {
+    return player.getMaxHealth();
   }
 }
