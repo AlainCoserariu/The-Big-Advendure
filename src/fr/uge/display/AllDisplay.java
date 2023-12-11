@@ -3,7 +3,6 @@ package fr.uge.display;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -17,12 +16,14 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
-import fr.uge.entity.BaseEntity;
-import fr.uge.entity.enemy.Enemy;
-import fr.uge.entity.player.Player;
-import fr.uge.fieldElement.FieldElement;
+import fr.uge.gameElement.Panel;
+import fr.uge.gameElement.entity.BaseEntity;
+import fr.uge.gameElement.entity.Enemy;
+import fr.uge.gameElement.entity.Player;
+import fr.uge.gameElement.fieldElement.Decoration;
+import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameElement.fieldElement.Obstacle;
 import fr.uge.gameParameter.GameParameter;
-import fr.uge.panel.Panel;
 import fr.umlv.zen5.ApplicationContext;
 
 public class AllDisplay {
@@ -99,7 +100,7 @@ public class AllDisplay {
       graphics.drawImage(images.get(enemy.getSkin().toString()), null,
           (int) (enemy.getX() * parameters.getTileSize() - parameters.getTileSize() / 2),
           (int) (enemy.getY() * parameters.getTileSize() - parameters.getTileSize() / 2));
-      displayHealthBar(enemy.enemy, graphics, parameters);
+      displayHealthBar(enemy.getBaseEntity(), graphics, parameters);
     });
   }
 
@@ -113,12 +114,22 @@ public class AllDisplay {
    */
   private static void displayField(FieldElement[][] field, Map<String, BufferedImage> images, Graphics2D graphics,
       GameParameter parameters) {
-    int i, j;
-    for (i = 0; i < field.length; i++) {
-      for (j = 0; j < field[i].length; j++) {
+    for (int i = 0; i < field.length; i++) {
+      for (int j = 0; j < field[i].length; j++) {
         if (field[i][j] != null) {
-          graphics.drawImage(images.get(field[i][j].getType().toString()), null, j * parameters.getTileSize(),
-              i * parameters.getTileSize());
+          switch (field[i][j]) {
+          case Obstacle o -> {
+            graphics.drawImage(images.get(o.getType().toString()), null, j * parameters.getTileSize(),
+                i * parameters.getTileSize());
+          }
+
+          case Decoration d -> {
+            graphics.drawImage(images.get(d.type().toString()), null, j * parameters.getTileSize(),
+                i * parameters.getTileSize());
+          }
+
+          default -> throw new IllegalArgumentException("Unexpected value: " + field[i][j]);
+          }
         }
       }
     }
@@ -137,7 +148,7 @@ public class AllDisplay {
     graphics.drawImage(images.get(p.getSkin().toString()), null,
         (int) (p.getX() * parameters.getTileSize()) - parameters.getTileSize() / 2,
         (int) (p.getY() * parameters.getTileSize()) - parameters.getTileSize() / 2);
-    displayHealthBar(p.player, graphics, parameters);
+    displayHealthBar(p.getBaseEntity(), graphics, parameters);
   }
 
   /**

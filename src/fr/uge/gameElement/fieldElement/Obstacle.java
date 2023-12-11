@@ -1,9 +1,8 @@
-package fr.uge.fieldElement.obstacle;
+package fr.uge.gameElement.fieldElement;
 
-import fr.uge.fieldElement.FieldElement;
-import fr.uge.utility.hitboxe.Hitbox;
+import fr.uge.gameElement.utility.hitboxe.Hitbox;
 
-public class Obstacle implements FieldElement {
+public final class Obstacle implements FieldElement {
   private final double x;
   private final double y;
   
@@ -26,11 +25,11 @@ public class Obstacle implements FieldElement {
     hitbox = new Hitbox(x, y, 1);
   }
 
-  public double getX() {
+  public double x() {
     return x;
   }
 
-  public double getY() {
+  public double y() {
     return y;
   }
   

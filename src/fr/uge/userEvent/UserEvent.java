@@ -3,8 +3,8 @@ package fr.uge.userEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.uge.gameElement.Panel;
 import fr.uge.gameParameter.GameParameter;
-import fr.uge.panel.Panel;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;

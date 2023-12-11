@@ -1,14 +1,14 @@
-package fr.uge.entity.enemy;
+package fr.uge.gameElement.entity;
 
 import java.util.Objects;
 
-import fr.uge.entity.BaseEntity;
-import fr.uge.entity.Entity;
-import fr.uge.fieldElement.FieldElement;
-import fr.uge.utility.movementZone.MovementZone;
+import fr.uge.gameElement.entity.enemy.BehaviorEnum;
+import fr.uge.gameElement.entity.enemy.SkinEnemy;
+import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameElement.utility.movementZone.MovementZone;
 
-public class Enemy implements Entity {
-  public final BaseEntity enemy;
+public final class Enemy implements Entity {
+  private final BaseEntity enemy;
   private final SkinEnemy skin;
   private final MovementZone zone;
   private final BehaviorEnum behavior;
@@ -79,5 +79,10 @@ public class Enemy implements Entity {
   @Override
   public int getMaxHealth() {
     return enemy.getMaxHealth();
+  }
+
+  @Override
+  public BaseEntity getBaseEntity() {
+    return enemy;
   }
 }

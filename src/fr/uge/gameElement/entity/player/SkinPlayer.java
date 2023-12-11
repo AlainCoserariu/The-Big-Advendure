@@ -1,4 +1,4 @@
-package fr.uge.entity.player;
+package fr.uge.gameElement.entity.player;
 
 public enum SkinPlayer {
   BABA,

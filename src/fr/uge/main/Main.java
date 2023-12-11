@@ -5,14 +5,12 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import fr.uge.display.AllDisplay;
-import fr.uge.entity.player.SkinPlayer;
+import fr.uge.gameElement.Panel;
 import fr.uge.gameParameter.GameParameter;
-import fr.uge.panel.Panel;
 import fr.uge.userEvent.UserEvent;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ScreenInfo;

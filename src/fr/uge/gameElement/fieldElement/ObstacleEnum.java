@@ -1,8 +1,6 @@
-package fr.uge.fieldElement.obstacle;
+package fr.uge.gameElement.fieldElement;
 
-import fr.uge.fieldElement.EnumType;
-
-public enum ObstacleEnum implements EnumType{
+public enum ObstacleEnum {
   BED,  
   BOG,  
   BOMB,  

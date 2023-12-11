@@ -1,13 +1,12 @@
-package fr.uge.entity.player;
+package fr.uge.gameElement.entity;
 
 import java.util.Objects;
 
-import fr.uge.entity.BaseEntity;
-import fr.uge.entity.Entity;
-import fr.uge.fieldElement.FieldElement;
+import fr.uge.gameElement.entity.player.SkinPlayer;
+import fr.uge.gameElement.fieldElement.FieldElement;
 
-public class Player implements Entity {
-  public final BaseEntity player;
+public final class Player implements Entity {
+  private final BaseEntity player;
   private final SkinPlayer skin;
 
   /**
@@ -67,5 +66,10 @@ public class Player implements Entity {
   @Override
   public int getMaxHealth() {
     return player.getMaxHealth();
+  }
+
+  @Override
+  public BaseEntity getBaseEntity() {
+    return player;
   }
 }

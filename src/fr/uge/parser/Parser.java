@@ -6,22 +6,21 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import fr.uge.entity.enemy.BehaviorEnum;
-import fr.uge.entity.enemy.Enemy;
-import fr.uge.entity.enemy.SkinEnemy;
-import fr.uge.entity.player.Player;
-import fr.uge.entity.player.SkinPlayer;
-import fr.uge.fieldElement.FieldElement;
-import fr.uge.fieldElement.decoration.Decoration;
-import fr.uge.fieldElement.decoration.DecorationEnum;
-import fr.uge.fieldElement.obstacle.Obstacle;
-import fr.uge.fieldElement.obstacle.ObstacleEnum;
-import fr.uge.utility.movementZone.MovementZone;
+import fr.uge.gameElement.entity.Enemy;
+import fr.uge.gameElement.entity.Player;
+import fr.uge.gameElement.entity.enemy.BehaviorEnum;
+import fr.uge.gameElement.entity.enemy.SkinEnemy;
+import fr.uge.gameElement.entity.player.SkinPlayer;
+import fr.uge.gameElement.fieldElement.Decoration;
+import fr.uge.gameElement.fieldElement.DecorationEnum;
+import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameElement.fieldElement.Obstacle;
+import fr.uge.gameElement.fieldElement.ObstacleEnum;
+import fr.uge.gameElement.utility.movementZone.MovementZone;
 
 public class Parser {
   public Player player;

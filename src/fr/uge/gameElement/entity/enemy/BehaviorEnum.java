@@ -1,4 +1,4 @@
-package fr.uge.entity.enemy;
+package fr.uge.gameElement.entity.enemy;
 
 public enum BehaviorEnum {
   shy,

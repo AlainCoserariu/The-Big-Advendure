@@ -1,9 +1,9 @@
-package fr.uge.entity;
+package fr.uge.gameElement.entity;
 
 import java.util.Objects;
 
-import fr.uge.fieldElement.FieldElement;
-import fr.uge.utility.hitboxe.Hitbox;
+import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameElement.utility.hitboxe.Hitbox;
 
 public class BaseEntity {
   private double x;
@@ -14,9 +14,9 @@ public class BaseEntity {
   private int health;
   private int maxHealth;
 
-  public final Hitbox hitbox;
+  private final Hitbox hitbox;
   
-  public final int iframeDuration;  // Number of invincibility frames after taking damage
+  private final int iframeDuration;  // Number of invincibility frames after taking damage
 
   private final String name;
 

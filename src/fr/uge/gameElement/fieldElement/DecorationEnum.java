@@ -1,8 +1,6 @@
-package fr.uge.fieldElement.decoration;
+package fr.uge.gameElement.fieldElement;
 
-import fr.uge.fieldElement.EnumType;
-
-public enum DecorationEnum implements EnumType{
+public enum DecorationEnum {
   ALGAE,
   CLOUD,
   FLOWER,

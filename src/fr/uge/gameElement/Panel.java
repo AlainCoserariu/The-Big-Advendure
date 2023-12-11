@@ -1,13 +1,13 @@
-package fr.uge.panel;
+package fr.uge.gameElement;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.uge.entity.enemy.Enemy;
-import fr.uge.entity.player.Player;
-import fr.uge.fieldElement.FieldElement;
+import fr.uge.gameElement.entity.Enemy;
+import fr.uge.gameElement.entity.Player;
+import fr.uge.gameElement.fieldElement.FieldElement;
 import fr.uge.parser.Parser;
 
 public class Panel {

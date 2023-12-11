@@ -1,4 +1,4 @@
-package fr.uge.utility.hitboxe;
+package fr.uge.gameElement.utility.hitboxe;
 
 public class Hitbox {
   private double leftX;

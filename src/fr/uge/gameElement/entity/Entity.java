@@ -1,8 +1,8 @@
-package fr.uge.entity;
+package fr.uge.gameElement.entity;
 
-import fr.uge.fieldElement.FieldElement;
+import fr.uge.gameElement.fieldElement.FieldElement;
 
-public interface Entity {
+public sealed interface Entity permits Enemy, Player{
   void move(double x, double y);
 
   void takeDamage(int damage);
@@ -22,4 +22,6 @@ public interface Entity {
   int getHealth();
 
   int getMaxHealth();
+  
+  BaseEntity getBaseEntity();
 }

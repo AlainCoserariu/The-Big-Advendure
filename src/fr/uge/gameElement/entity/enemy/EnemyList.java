@@ -1,7 +1,9 @@
-package fr.uge.entity.enemy;
+package fr.uge.gameElement.entity.enemy;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import fr.uge.gameElement.entity.Enemy;
 
 public class EnemyList {
   private final ArrayList<Enemy> enemies;
