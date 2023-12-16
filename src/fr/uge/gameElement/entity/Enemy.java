@@ -2,16 +2,16 @@ package fr.uge.gameElement.entity;
 
 import java.util.Objects;
 
-import fr.uge.gameElement.entity.enemy.BehaviorEnum;
-import fr.uge.gameElement.entity.enemy.SkinEnemy;
+import fr.uge.enums.Behavior;
+import fr.uge.enums.SkinEnemy;
 import fr.uge.gameElement.fieldElement.FieldElement;
-import fr.uge.gameElement.utility.movementZone.MovementZone;
+import fr.uge.gameElement.utility.MovementZone;
 
 public final class Enemy implements Entity {
-  private final BaseEntity enemy;
+  private final EntityStats enemy;
   private final SkinEnemy skin;
   private final MovementZone zone;
-  private final BehaviorEnum behavior;
+  private final Behavior behavior;
 
   /**
    * Enemy constructor
@@ -23,10 +23,10 @@ public final class Enemy implements Entity {
    * @param name
    */
   public Enemy(double x, double y, double speed, int maxHealth, String name, SkinEnemy skin, MovementZone zone,
-      BehaviorEnum behavior) {
+      Behavior behavior) {
     Objects.requireNonNull(name);
 
-    enemy = new BaseEntity(x, y, speed, maxHealth, name);
+    enemy = new EntityStats(x, y, speed, maxHealth, name);
     this.skin = skin;
     this.zone = zone;
     this.behavior = behavior;
@@ -82,7 +82,7 @@ public final class Enemy implements Entity {
   }
 
   @Override
-  public BaseEntity getBaseEntity() {
+  public EntityStats getBaseEntity() {
     return enemy;
   }
 }

@@ -1,6 +1,6 @@
 package fr.uge.gameElement.fieldElement;
 
-import fr.uge.gameElement.utility.hitboxe.Hitbox;
+import fr.uge.gameElement.utility.Hitbox;
 
 public sealed interface FieldElement permits Obstacle, Decoration {
 

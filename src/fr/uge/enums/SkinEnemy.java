@@ -1,4 +1,4 @@
-package fr.uge.gameElement.entity.enemy;
+package fr.uge.enums;
 
 public enum SkinEnemy {
   BAT,

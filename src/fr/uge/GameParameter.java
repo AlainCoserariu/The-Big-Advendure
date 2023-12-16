@@ -1,4 +1,4 @@
-package fr.uge.gameParameter;
+package fr.uge;
 
 /**
  * Represents all the game parameters

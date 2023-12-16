@@ -1,10 +1,9 @@
-package fr.uge.userEvent;
+package fr.uge;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import fr.uge.gameElement.Panel;
-import fr.uge.gameParameter.GameParameter;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
@@ -54,9 +53,9 @@ public class UserEvent {
    */
   private void movePlayer(Panel panel, KeyboardKey direction, double deltaX, double deltaY) {
     if (keyPressed.get(direction)) {
-      panel.player.move(deltaX, deltaY);
-      if (panel.player.collideWithObstacle(panel.getField())) {
-        panel.player.move(-deltaX, -deltaY);
+      panel.getPlayer().move(deltaX, deltaY);
+      if (panel.getPlayer().collideWithObstacle(panel.getField())) {
+        panel.getPlayer().move(-deltaX, -deltaY);
       }
     }
   }
@@ -68,7 +67,7 @@ public class UserEvent {
    * @param parameters
    */
   private void handlePlayerMovement(Panel panel, GameParameter parameters) {
-    double step = panel.player.getSpeed() / parameters.getFramerate();
+    double step = panel.getPlayer().getSpeed() / parameters.getFramerate();
     
     movePlayer(panel, KeyboardKey.UP, 0, -step);
     movePlayer(panel, KeyboardKey.DOWN, 0, step);

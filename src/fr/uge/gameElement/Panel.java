@@ -36,4 +36,8 @@ public class Panel {
 		FieldElement[][] tmp = field.clone();
 		return tmp;
 	}
+
+  public Player getPlayer() {
+    return player;
+  }
 }

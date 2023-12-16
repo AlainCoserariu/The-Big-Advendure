@@ -3,9 +3,13 @@ package fr.uge.gameElement.entity;
 import java.util.Objects;
 
 import fr.uge.gameElement.fieldElement.FieldElement;
-import fr.uge.gameElement.utility.hitboxe.Hitbox;
+import fr.uge.gameElement.utility.Hitbox;
 
-public class BaseEntity {
+/**
+ * Class used for delegation. Represent all the fields used in differents
+ * classes like player, monster or friend
+ */
+public class EntityStats {
   private double x;
   private double y;
 
@@ -15,8 +19,8 @@ public class BaseEntity {
   private int maxHealth;
 
   private final Hitbox hitbox;
-  
-  private final int iframeDuration;  // Number of invincibility frames after taking damage
+
+  private final int iframeDuration; // Number of invincibility frames after taking damage
 
   private final String name;
 
@@ -29,24 +33,24 @@ public class BaseEntity {
    * @param maxHealth
    * @param name
    */
-  public BaseEntity(double x, double y, double speed, int maxHealth, String name) {
+  public EntityStats(double x, double y, double speed, int maxHealth, String name) {
     Objects.requireNonNull(name);
 
     this.x = x;
     this.y = y;
-    
+
     hitbox = new Hitbox(x, y, 0.8);
-    
+
     this.speed = speed;
-    
+
     this.maxHealth = maxHealth;
     this.health = maxHealth;
-    
+
     iframeDuration = 60;
-    
+
     this.name = name;
   }
-  
+
   public void move(double x, double y) {
     this.x += x;
     this.y += y;
@@ -63,7 +67,8 @@ public class BaseEntity {
   }
 
   /**
-   * Check if the entity is colliding with a field element. Check only surrounding tiles
+   * Check if the entity is colliding with a field element. Check only surrounding
+   * tiles
    * 
    * @param field
    * @return
@@ -76,16 +81,16 @@ public class BaseEntity {
           // Check the collision, only with obstacles
           if (field[i][j] != null && field[i][j].IsObstacle() && hitbox.collide(field[i][j].getHitbox())) {
             return true;
-          }          
+          }
         }
       }
     }
-    
+
     return false;
   }
-  
+
   // ---------------------------------GETTERS---------------------------------
-  
+
   public double getX() {
     return x;
   }

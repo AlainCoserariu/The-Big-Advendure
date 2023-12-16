@@ -2,11 +2,11 @@ package fr.uge.gameElement.entity;
 
 import java.util.Objects;
 
-import fr.uge.gameElement.entity.player.SkinPlayer;
+import fr.uge.enums.SkinPlayer;
 import fr.uge.gameElement.fieldElement.FieldElement;
 
 public final class Player implements Entity {
-  private final BaseEntity player;
+  private final EntityStats player;
   private final SkinPlayer skin;
 
   /**
@@ -21,7 +21,7 @@ public final class Player implements Entity {
   public Player(double x, double y, double speed, int maxHealth, String name, SkinPlayer skin) {
     Objects.requireNonNull(name);
     
-    player = new BaseEntity(x, y, speed, maxHealth, name);
+    player = new EntityStats(x, y, speed, maxHealth, name);
     this.skin = skin;
   }
   
@@ -69,7 +69,7 @@ public final class Player implements Entity {
   }
 
   @Override
-  public BaseEntity getBaseEntity() {
+  public EntityStats getBaseEntity() {
     return player;
   }
 }

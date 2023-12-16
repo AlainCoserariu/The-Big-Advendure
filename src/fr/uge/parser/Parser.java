@@ -10,17 +10,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import fr.uge.enums.Behavior;
+import fr.uge.enums.SkinEnemy;
+import fr.uge.enums.SkinPlayer;
 import fr.uge.gameElement.entity.Enemy;
 import fr.uge.gameElement.entity.Player;
-import fr.uge.gameElement.entity.enemy.BehaviorEnum;
-import fr.uge.gameElement.entity.enemy.SkinEnemy;
-import fr.uge.gameElement.entity.player.SkinPlayer;
 import fr.uge.gameElement.fieldElement.Decoration;
 import fr.uge.gameElement.fieldElement.DecorationEnum;
 import fr.uge.gameElement.fieldElement.FieldElement;
 import fr.uge.gameElement.fieldElement.Obstacle;
 import fr.uge.gameElement.fieldElement.ObstacleEnum;
-import fr.uge.gameElement.utility.movementZone.MovementZone;
+import fr.uge.gameElement.utility.MovementZone;
 
 public class Parser {
   public Player player;
@@ -156,7 +156,7 @@ public class Parser {
 
     var skins = Arrays.stream(SkinEnemy.values()).map(Enum::toString).toList();
 
-    var behaviors = Arrays.stream(BehaviorEnum.values()).map(Enum::toString).toList();;
+    var behaviors = Arrays.stream(Behavior.values()).map(Enum::toString).toList();;
 
     if (!skins.contains(monster.get("skin"))) {
       System.err.println("Can't load the monster skin, monster not created");
@@ -171,7 +171,7 @@ public class Parser {
     
     var res = new Enemy(pos.get(0) + 0.5, pos.get(1) + 0.5, 2, Integer.parseInt(monster.get("health")),
         monster.get("name"), SkinEnemy.valueOf(monster.get("skin")), zone,
-        BehaviorEnum.valueOf(monster.get("behavior")));
+        Behavior.valueOf(monster.get("behavior")));
     
     enemies.add(res);
   }
