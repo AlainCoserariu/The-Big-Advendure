@@ -51,7 +51,19 @@ public class Main {
 
   public static void main(String[] args) throws IOException {
     Panel panel = new Panel(Path.of("maps").resolve("fun.map"));
+    // Load images
+    Map<String, BufferedImage> images;
+    try {
+      images = Display.loadImage();
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+      System.exit(1);
+      return;
+    }
 
+    // Initialize input
+    var userInput = new UserEvent();
+    
     Application.run(Color.DARK_GRAY, context -> {
       // get the size of the screen
       ScreenInfo screenInfo = context.getScreenInfo();
@@ -61,19 +73,6 @@ public class Main {
       GameParameter gameParameters = new GameParameter((int) screenInfo.getWidth(), (int) screenInfo.getHeight(),
           framerate);
 
-      // Initialize input
-      var userInput = new UserEvent();
-
-      // Load images
-      Map<String, BufferedImage> images;
-      try {
-        images = Display.loadImage(gameParameters);
-      } catch (IOException e) {
-        System.err.println(e.getMessage());
-        context.exit(1);
-        System.exit(1);
-        return;
-      }
 
       try {
         gameLoop(panel, images, context, gameParameters, userInput);

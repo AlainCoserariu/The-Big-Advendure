@@ -517,9 +517,22 @@ public class Parser {
   }
 
   private static void fillTextField(List<Result> block, Map<String, List<Result>> elements, int index) {
+    while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
+      if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.QUOTE) {
+        errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", quote expected");
+      } else {
+        elements.get("text").add(block.get(index));
+      }
+      index++;
+    }
+    if (elements.get("text").size() != 1) {
+      errors.add("Line " + cmptLine + ": Unexpected number of token (" + elements.get("text").size()
+          + ") for text, only one quote expected");
+    }
   }
 
   private static void fillStealField(List<Result> block, Map<String, List<Result>> elements, int index) {
+    
   }
 
   private static void fillTradeField(List<Result> block, Map<String, List<Result>> elements, int index) {

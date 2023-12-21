@@ -1,0 +1,3 @@
+[grid]
+  size: (4 x 3)
+  encodings: WALL(W)

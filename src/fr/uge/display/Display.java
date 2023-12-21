@@ -45,7 +45,7 @@ public class Display {
    * @return
    * @throws IOException
    */
-  public static Map<String, BufferedImage> loadImage(GameParameter parameters) throws IOException {
+  public static Map<String, BufferedImage> loadImage() throws IOException {
     return Map.copyOf(Files.walk(Path.of("ressources"), 10, FileVisitOption.FOLLOW_LINKS)
         .filter(f -> f.getFileName().toString().endsWith(".png")) // Get all png files
         .collect(Collectors.toMap(s -> s.getFileName() // KeyMapper, transform path into game name element (i.e.
