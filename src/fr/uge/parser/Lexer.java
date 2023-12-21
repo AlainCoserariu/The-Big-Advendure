@@ -1,5 +1,9 @@
 package fr.uge.parser;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -19,6 +23,18 @@ public class Lexer {
     this.matcher = PATTERN.matcher(text);
   }
 
+  public static List<Result> getAllTokensFromFile(Path mapFile) throws IOException {
+    var text = Files.readString(mapFile);
+    var lexer = new Lexer(text);
+    var tokens = new ArrayList<Result>();
+    Result tmpToken;
+    while ((tmpToken = lexer.nextResult()) != null) {
+      tokens.add(tmpToken);
+    }
+    
+    return List.copyOf(tokens);
+  }
+  
   public Result nextResult() {
     var matches = matcher.find();
     if (!matches) {

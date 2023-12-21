@@ -1,5 +1,6 @@
 package fr.uge.gameElement.fieldElement;
 
+import fr.uge.enums.ObstacleEnum;
 import fr.uge.gameElement.utility.Hitbox;
 
 public final class Obstacle implements FieldElement {

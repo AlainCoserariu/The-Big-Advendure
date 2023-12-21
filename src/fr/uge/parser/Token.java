@@ -9,6 +9,7 @@ public enum Token {
   RIGHT_BRACKET("\\]"),
   COMMA(","),
   COLON(":"),
+  NEW_LINE("\\n"),
   QUOTE("\"\"\"[^\"]+\"\"\""),;
 
   public final String regex;

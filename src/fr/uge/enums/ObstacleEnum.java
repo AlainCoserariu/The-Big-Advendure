@@ -1,4 +1,7 @@
-package fr.uge.gameElement.fieldElement;
+package fr.uge.enums;
+
+import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 public enum ObstacleEnum {
   BED,  
@@ -31,5 +34,11 @@ public enum ObstacleEnum {
   TOWER,  
   TREE,  
   TREES,  
-  WALL,
+  WALL;
+  
+  public static boolean contains(String elt) {
+    var set = EnumSet.allOf(ObstacleEnum.class).stream().map(t -> t.toString()).collect(Collectors.toSet());
+
+    return set.contains(elt) ? true : false;
+  }
 }

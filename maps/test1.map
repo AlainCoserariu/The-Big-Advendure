@@ -1,5 +1,27 @@
 [grid]
-player: un deux trois soleil
+encodings: WALL (
+
+
+    Z) 
+
+
+algae(b
+)
+size: (
+
+5 x 
+
+5)
+data: """
+ZZbZZ
+ZZZZZ
+Z   Z
+ZZZbZ
+bbbbb
+"""
+
+
+zone: (1, 7) (5 x 8)
+
 [element]
-field1: feur
-field2: quoicoubeh test \n
+zone: (5, 12) (8 x 8)

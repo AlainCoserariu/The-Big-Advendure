@@ -1,8 +1,11 @@
 package fr.uge.enums;
 
+import java.util.EnumSet;
+import java.util.stream.Collectors;
+
 public enum possibleFieldMapFile {
   size,
-  encoding,
+  encodings,
   data,
   name,
   skin,
@@ -19,5 +22,11 @@ public enum possibleFieldMapFile {
   locked,
   flow,
   phantomized,
-  teleport
+  teleport;
+  
+  public static boolean contains(String elt) {
+    var set = EnumSet.allOf(possibleFieldMapFile.class).stream().map(t -> t.toString()).collect(Collectors.toSet());
+
+    return set.contains(elt) ? true : false;
+  }
 }
