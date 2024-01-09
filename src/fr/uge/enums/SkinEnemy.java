@@ -23,5 +23,14 @@ public enum SkinEnemy {
   SKULL,
   TEETH,
   TURTLE,
-  WORM
+  WORM;
+  
+  public static boolean contains(String elt) {
+    try {
+      SkinEnemy.valueOf(elt);
+      return true;
+    } catch (RuntimeException e) {
+      return false;
+    }
+  }
 }

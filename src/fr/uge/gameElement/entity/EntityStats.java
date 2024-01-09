@@ -110,4 +110,8 @@ public class EntityStats {
   public int getMaxHealth() {
     return maxHealth;
   }
+  
+  public String getName() {
+    return name;
+  }
 }

@@ -1,4 +1,4 @@
-package fr.uge.gameElement.fieldElement;
+package fr.uge.enums;
 
 public enum ObstacleEnum {
   BED,  
@@ -32,4 +32,17 @@ public enum ObstacleEnum {
   TREE,  
   TREES,  
   WALL,
+  // TEMPORAR
+  LAVA,
+  WATER,
+  ICE;
+  
+  public static boolean contains(String elt) {
+    try {
+      ObstacleEnum.valueOf(elt);
+      return true;
+    } catch (RuntimeException e) {
+      return false;
+    }
+  }
 }

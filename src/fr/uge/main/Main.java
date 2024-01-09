@@ -49,8 +49,20 @@ public class Main {
     }
   }
 
-  public static void main(String[] args) throws IOException {
-    Panel panel = new Panel(Path.of("maps").resolve("fun.map"));
+  public static void game(String map) throws IOException {
+    // Init game variables
+    Panel panel;
+    try {
+      panel = new Panel(Path.of("maps").resolve(map));
+    } catch (IOException e) {
+      System.out.println("Can't find " + map + " file. Ending program");
+      return;
+    }
+    // Load images
+    Map<String, BufferedImage> images = Display.loadImage();
+
+    // Initialize input
+    var userInput = new UserEvent();
 
     Application.run(Color.DARK_GRAY, context -> {
       // get the size of the screen
@@ -61,20 +73,6 @@ public class Main {
       GameParameter gameParameters = new GameParameter((int) screenInfo.getWidth(), (int) screenInfo.getHeight(),
           framerate);
 
-      // Initialize input
-      var userInput = new UserEvent();
-
-      // Load images
-      Map<String, BufferedImage> images;
-      try {
-        images = Display.loadImage(gameParameters);
-      } catch (IOException e) {
-        System.err.println(e.getMessage());
-        context.exit(1);
-        System.exit(1);
-        return;
-      }
-
       try {
         gameLoop(panel, images, context, gameParameters, userInput);
       } catch (InterruptedException e) {
@@ -84,5 +82,9 @@ public class Main {
         return;
       }
     });
+  }
+
+  public static void main(String[] args) throws IOException {
+    game("true-fun.map");
   }
 }

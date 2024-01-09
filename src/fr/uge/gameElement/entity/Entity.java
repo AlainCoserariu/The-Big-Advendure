@@ -24,4 +24,6 @@ public sealed interface Entity permits Enemy, Player{
   int getMaxHealth();
   
   EntityStats getBaseEntity();
+  
+  String getName();
 }

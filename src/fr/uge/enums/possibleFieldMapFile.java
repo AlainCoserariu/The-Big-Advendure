@@ -2,7 +2,7 @@ package fr.uge.enums;
 
 public enum possibleFieldMapFile {
   size,
-  encoding,
+  encodings,
   data,
   name,
   skin,
@@ -19,5 +19,14 @@ public enum possibleFieldMapFile {
   locked,
   flow,
   phantomized,
-  teleport
+  teleport;
+  
+  public static boolean contains(String elt) {
+    try {
+      possibleFieldMapFile.valueOf(elt);
+      return true;
+    } catch (RuntimeException e) {
+      return false;
+    }
+  }
 }
