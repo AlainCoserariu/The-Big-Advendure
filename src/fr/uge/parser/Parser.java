@@ -15,6 +15,7 @@ import fr.uge.enums.Behavior;
 import fr.uge.enums.DecorationEnum;
 import fr.uge.enums.ObstacleEnum;
 import fr.uge.enums.SkinEnemy;
+import fr.uge.enums.SkinItem;
 import fr.uge.enums.SkinPlayer;
 import fr.uge.enums.possibleFieldMapFile;
 import fr.uge.gameElement.entity.Enemy;
@@ -25,12 +26,14 @@ import fr.uge.gameElement.fieldElement.Obstacle;
 import fr.uge.gameElement.utility.MovementZone;
 
 public class Parser {
+  // Those field will be constructed while parsing the file
   private static Player player = null;
-  private static List<Enemy> enemies = null;
+  private final static List<Enemy> enemies = new ArrayList<Enemy>();
   private static FieldElement[][] field = null;
 
   private static int cmptToken = 0;
   private static int cmptLine = 1;
+  // Track all the errors in the file
   private static final List<String> errors = new ArrayList<String>();
 
   private static void updateCmptToken(List<Result> tokens) {
@@ -213,55 +216,47 @@ public class Parser {
   }
 
   /**
-   * Parse all the player data
+   * Parse all the player data into player variable
    * 
    * @param player_info
    */
-  private static void parsePlayer(Map<String, String> player_info, Player player) {
-    var pos = parseNumbers(player_info.get("position"));
-
-    var skins = Arrays.stream(SkinPlayer.values()).map(Enum::toString).toList();
-
-    if (skins.contains(player_info.get("skin"))) {
-      player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 5, Integer.parseInt(player_info.get("health")),
-          player_info.get("name"), SkinPlayer.valueOf(player_info.get("skin")));
-    } else {
-      System.out.println("Can't detecte player skin, apply default skin (BABA)");
-
-      player = new Player(pos.get(0) + 0.5, pos.get(1) + 0.5, 5, Integer.parseInt(player_info.get("health")),
-          player_info.get("name"), SkinPlayer.valueOf("BABA"));
+  private static void parsePlayer(Map<String, List<Result>> player_info) {
+    if (player_info.get("position").isEmpty() || player_info.get("health").isEmpty()
+        || player_info.get("name").isEmpty() || player_info.get("skin").isEmpty()) {
+      errors.add(
+          "Player block isn't correctly formed, missing at least one of the following field : position, health, name, skin");
     }
+
+    double x = Integer.parseInt(player_info.get("position").get(1).content()) + 0.5;
+    double y = Integer.parseInt(player_info.get("position").get(3).content()) + 0.5;
+    int health = Integer.parseInt(player_info.get("health").get(0).content());
+    player = new Player(x, y, 7, health, player_info.get("name").get(0).content(),
+        SkinPlayer.valueOf(player_info.get("skin").get(0).content()));
   }
 
   /**
-   * Parse all the monster data
+   * Parse all the monster data into the enemy map
    * 
    * @param monster
    */
-  private static void parseMonster(Map<String, String> monster, List<Enemy> enemies) {
-    var pos = parseNumbers(monster.get("position"));
-    var zoneTmp = parseNumbers(monster.get("zone"));
-
-    var skins = Arrays.stream(SkinEnemy.values()).map(Enum::toString).toList();
-
-    var behaviors = Arrays.stream(Behavior.values()).map(Enum::toString).toList();
-    ;
-
-    if (!skins.contains(monster.get("skin"))) {
-      System.err.println("Can't load the monster skin, monster not created");
-      return;
-    } else if (!behaviors.contains(monster.get("behavior"))) {
-      System.err.println("Can't load the monster behavior, monster not created");
-      return;
+  private static void parseMonster(Map<String, List<Result>> monster) {
+    if (monster.get("name").isEmpty() || monster.get("skin").isEmpty() || monster.get("position").isEmpty()
+        || monster.get("health").isEmpty() || monster.get("zone").isEmpty() || monster.get("behavior").isEmpty()
+        || monster.get("damage").isEmpty()) {
+      errors.add(
+          "Monster block isn't correctly formed, missing at least one of the following field : name, skin, position, health, zone, behavior, damage");
     }
 
-    MovementZone zone = new MovementZone(zoneTmp.get(0), zoneTmp.get(1), zoneTmp.get(0) + zoneTmp.get(2),
-        zoneTmp.get(1) + zoneTmp.get(3));
+    double x = Integer.parseInt(monster.get("position").get(1).content()) + 0.5;
+    double y = Integer.parseInt(monster.get("position").get(3).content()) + 0.5;
+    int health = Integer.parseInt(monster.get("health").get(0).content());
+    MovementZone zone = new MovementZone(Integer.parseInt(monster.get("zone").get(1).content()),
+        Integer.parseInt(monster.get("zone").get(3).content()), Integer.parseInt(monster.get("zone").get(6).content()),
+        Integer.parseInt(monster.get("zone").get(8).content()));
 
-    var res = new Enemy(pos.get(0) + 0.5, pos.get(1) + 0.5, 2, Integer.parseInt(monster.get("health")),
-        monster.get("name"), SkinEnemy.valueOf(monster.get("skin")), zone, Behavior.valueOf(monster.get("behavior")));
-
-    enemies.add(res);
+    enemies.add(new Enemy(x, y, 10, health, monster.get("name").get(0).content(),
+        SkinEnemy.valueOf(monster.get("skin").get(0).content()), zone,
+        Behavior.valueOf(monster.get("behavior").get(0).content())));
   }
 
   /**
@@ -270,11 +265,17 @@ public class Parser {
    * @param elements
    */
   private static void parseElement(Map<String, List<Result>> elements) {
-//    if (elements.get("player") != null && elements.get("player").equals("true")) {
-//      parsePlayer(elements, player);
-//    } else if (elements.get("kind") != null && elements.get("kind").equals("enemy")) {
-//      parseMonster(elements, enemies);
-//    }
+    if (!elements.get("player").isEmpty() && elements.get("player").get(0).content().equals("true")) {
+      parsePlayer(elements);
+    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("enemy")) {
+      parseMonster(elements);
+    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("obstacle")) {
+
+    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("friend")) {
+
+    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("item")) {
+
+    }
 
   }
 
@@ -377,7 +378,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", identifier expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("name").add(block.get(index));
       }
       index++;
@@ -392,7 +393,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", identifier expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("skin").add(block.get(index));
       }
       index++;
@@ -403,7 +404,8 @@ public class Parser {
     } else if (!DecorationEnum.contains(elements.get("skin").get(0).content())
         && !ObstacleEnum.contains(elements.get("skin").get(0).content())
         && !SkinEnemy.contains(elements.get("skin").get(0).content())
-        && !SkinPlayer.contains(elements.get("skin").get(0).content())) {
+        && !SkinPlayer.contains(elements.get("skin").get(0).content())
+        && !SkinItem.contains(elements.get("skin").get(0).content())) {
       errors.add("Line " + cmptLine + ": " + elements.get("skin").get(0).content() + " is not valide");
     }
   }
@@ -413,7 +415,7 @@ public class Parser {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content()
             + ", identifier true or false expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE){
         elements.get("player").add(block.get(index));
       }
       index++;
@@ -430,7 +432,7 @@ public class Parser {
 
   private static void fillPositionField(List<Result> block, Map<String, List<Result>> elements, int index) {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
-      if (block.get(index).token() == Token.NEW_LINE) {
+      if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("position").add(block.get(index));
       }
       index++;
@@ -442,7 +444,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.NUMBER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", number expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("health").add(block.get(index));
       }
       index++;
@@ -457,18 +459,18 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", identifier expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE){
         elements.get("kind").add(block.get(index));
       }
       index++;
     }
-    if (elements.get("skin").size() != 1) {
+    if (elements.get("kind").size() != 1) {
       errors.add("Line " + cmptLine + ": Unexpected number of token (" + elements.get("skin").size()
           + ") for kind, only one identifier (friend, enemy, item or obstacle) expected");
-    } else if (!elements.get("skin").get(0).content().equals("obstacle")
-        && !elements.get("skin").get(0).content().equals("item")
-        && !elements.get("skin").get(0).content().equals("enemy")
-        && !elements.get("skin").get(0).content().equals("friend")) {
+    } else if (!elements.get("kind").get(0).content().equals("obstacle")
+        && !elements.get("kind").get(0).content().equals("item")
+        && !elements.get("kind").get(0).content().equals("enemy")
+        && !elements.get("kind").get(0).content().equals("friend")) {
       errors.add("Line " + cmptLine + ": " + elements.get("player").get(0).content() + " is not valide");
     }
   }
@@ -487,7 +489,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", identifier expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("behavior").add(block.get(index));
       }
       index++;
@@ -495,7 +497,7 @@ public class Parser {
     if (elements.get("behavior").size() != 1) {
       errors.add("Line " + cmptLine + ": Unexpected number of token (" + elements.get("behavior").size()
           + ") for behavior, only one identifier expected");
-    } else if (!Behavior.contains(elements.get("skin").get(0).content())) {
+    } else if (!Behavior.contains(elements.get("behavior").get(0).content())) {
       errors.add(
           "Line " + cmptLine + ": " + elements.get("behavior").get(0).content() + " is not a possible behavior valide");
     }
@@ -505,7 +507,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.NUMBER) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", number expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("damage").add(block.get(index));
       }
       index++;
@@ -520,7 +522,7 @@ public class Parser {
     while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
       if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.QUOTE) {
         errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", quote expected");
-      } else {
+      } else if (block.get(index).token() != Token.NEW_LINE) {
         elements.get("text").add(block.get(index));
       }
       index++;
@@ -532,7 +534,17 @@ public class Parser {
   }
 
   private static void fillStealField(List<Result> block, Map<String, List<Result>> elements, int index) {
-    
+    while (index < block.size() && !possibleFieldMapFile.contains(block.get(index).content())) {
+      if (block.get(index).token() != Token.NEW_LINE && block.get(index).token() != Token.IDENTIFIER) {
+        errors.add("Line " + cmptLine + ": Unexpected token " + block.get(index).content() + ", identifier expected");
+      } else if (block.get(index).token() != Token.NEW_LINE) {
+        elements.get("steal").add(block.get(index));
+      }
+      index++;
+    }
+    if (elements.get("steal").size() == 0) {
+      errors.add("Line " + cmptLine + ": Unexpected number of token, more than 0 token needed for steal field");
+    }
   }
 
   private static void fillTradeField(List<Result> block, Map<String, List<Result>> elements, int index) {
@@ -596,7 +608,7 @@ public class Parser {
   private static void parseBlock(List<Result> block, Map<String, List<Result>> elements) {
     switch (block.get(1).content()) {
     case "grid" -> parseGrid(elements);
-    // case "element" -> parseElement(elements, player, enemies);
+    case "element" -> parseElement(elements);
     }
   }
 
@@ -756,14 +768,11 @@ public class Parser {
     for (; cmptToken < tokens.size(); updateCmptToken(tokens)) {
       if (tokens.get(cmptToken).token() != Token.NEW_LINE && tokens.get(cmptToken).token() != Token.QUOTE) {
         var block = getBlock(tokens);
-        System.out.println("parse 1 : " + cmptLine);
         // Transform the block into game data
         if (block != null)
           parseElements(block);
       }
     }
-
-    System.out.println("Fin de fichier, nombre de tokens lu : " + cmptToken);
     errors.forEach(System.out::println);
   }
 

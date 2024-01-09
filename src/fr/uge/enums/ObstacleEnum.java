@@ -1,8 +1,5 @@
 package fr.uge.enums;
 
-import java.util.EnumSet;
-import java.util.stream.Collectors;
-
 public enum ObstacleEnum {
   BED,  
   BOG,  
@@ -34,11 +31,18 @@ public enum ObstacleEnum {
   TOWER,  
   TREE,  
   TREES,  
-  WALL;
+  WALL,
+  // TEMPORAR
+  LAVA,
+  WATER,
+  ICE;
   
   public static boolean contains(String elt) {
-    var set = EnumSet.allOf(ObstacleEnum.class).stream().map(t -> t.toString()).collect(Collectors.toSet());
-
-    return set.contains(elt) ? true : false;
+    try {
+      ObstacleEnum.valueOf(elt);
+      return true;
+    } catch (RuntimeException e) {
+      return false;
+    }
   }
 }

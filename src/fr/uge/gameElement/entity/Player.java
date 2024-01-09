@@ -72,4 +72,9 @@ public final class Player implements Entity {
   public EntityStats getBaseEntity() {
     return player;
   }
+
+  @Override
+  public String getName() {
+    return player.getName();
+  }
 }

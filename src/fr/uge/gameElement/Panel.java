@@ -43,13 +43,21 @@ public class Panel {
   }
   
   public static void main(String[] args) throws IOException {
-    Panel panel = new Panel(Path.of("maps").resolve("test1.map"));
+    Panel panel = new Panel(Path.of("maps").resolve("true-fun.map"));
     
+    System.out.println("PRINTING MAP");
     for (var i : panel.getField()) {
       for (var j : i) {
         System.out.println(j);
       }
     }
     
+    System.out.println("\n\nPRINTING ENEMIES\n\n");
+    for(var i : panel.getEnemies()) {
+      System.out.println(i.getName());
+    }
+    
+    System.out.println("PRINTING PLAYER\n\n");
+    System.out.println(panel.getPlayer().getName());
   }
 }

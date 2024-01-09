@@ -85,4 +85,9 @@ public final class Enemy implements Entity {
   public EntityStats getBaseEntity() {
     return enemy;
   }
+
+  @Override
+  public String getName() {
+    return enemy.getName();
+  }
 }
