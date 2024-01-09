@@ -3,7 +3,8 @@ package fr.uge;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.uge.gameElement.Panel;
+import fr.uge.gameEngine.Panel;
+import fr.uge.gameEngine.entity.Player;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
@@ -53,9 +54,9 @@ public class UserEvent {
    */
   private void movePlayer(Panel panel, KeyboardKey direction, double deltaX, double deltaY) {
     if (keyPressed.get(direction)) {
-      panel.getPlayer().move(deltaX, deltaY);
-      if (panel.getPlayer().collideWithObstacle(panel.getField())) {
-        panel.getPlayer().move(-deltaX, -deltaY);
+      panel.getPlayer().move(panel.getPlayer().getX() + deltaX, panel.getPlayer().getY() + deltaY);
+      if (panel.getPlayer().collideWithObstacle(panel.getField()) || panel.getPlayer().collideWithEnemy(panel.getEnemies())) {
+        panel.getPlayer().move(panel.getPlayer().getX() - deltaX, panel.getPlayer().getY() - deltaY);
       }
     }
   }

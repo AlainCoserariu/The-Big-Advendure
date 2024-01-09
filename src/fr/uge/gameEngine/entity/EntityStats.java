@@ -1,9 +1,10 @@
-package fr.uge.gameElement.entity;
+package fr.uge.gameEngine.entity;
 
+import java.util.List;
 import java.util.Objects;
 
-import fr.uge.gameElement.fieldElement.FieldElement;
-import fr.uge.gameElement.utility.Hitbox;
+import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.utility.Hitbox;
 
 /**
  * Class used for delegation. Represent all the fields used in differents
@@ -21,6 +22,7 @@ public class EntityStats {
   private final Hitbox hitbox;
 
   private final int iframeDuration; // Number of invincibility frames after taking damage
+  private int iframe;
 
   private final String name;
 
@@ -33,7 +35,7 @@ public class EntityStats {
    * @param maxHealth
    * @param name
    */
-  public EntityStats(double x, double y, double speed, int maxHealth, String name) {
+  public EntityStats(double x, double y, double speed, int maxHealth, String name, int iframeDuration) {
     Objects.requireNonNull(name);
 
     this.x = x;
@@ -46,26 +48,34 @@ public class EntityStats {
     this.maxHealth = maxHealth;
     this.health = maxHealth;
 
-    iframeDuration = 60;
+    this.iframeDuration = iframeDuration;
+    iframe = 0;
 
     this.name = name;
   }
 
   public void move(double x, double y) {
-    this.x += x;
-    this.y += y;
+    this.x = x;
+    this.y = y;
 
     hitbox.updateHitbox(this.x, this.y);
   }
 
   public void takeDamage(int damage) {
     health = Integer.max(0, health - damage);
+    iframe = iframeDuration;
+  }
+  
+  public void updateIframes() {
+    if (iframe > 0) {
+      iframe--;      
+    }
   }
 
   public void heal(int healPoint) {
     health = Integer.max(health + healPoint, maxHealth);
   }
-
+  
   /**
    * Check if the entity is colliding with a field element. Check only surrounding
    * tiles
@@ -111,7 +121,15 @@ public class EntityStats {
     return maxHealth;
   }
   
+  public Hitbox getHitbox() {
+    return hitbox;
+  }
+  
   public String getName() {
     return name;
+  }
+  
+  public int getIframe() {
+    return iframe;
   }
 }

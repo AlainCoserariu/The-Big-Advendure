@@ -18,12 +18,12 @@ import fr.uge.enums.SkinEnemy;
 import fr.uge.enums.SkinItem;
 import fr.uge.enums.SkinPlayer;
 import fr.uge.enums.possibleFieldMapFile;
-import fr.uge.gameElement.entity.Enemy;
-import fr.uge.gameElement.entity.Player;
-import fr.uge.gameElement.fieldElement.Decoration;
-import fr.uge.gameElement.fieldElement.FieldElement;
-import fr.uge.gameElement.fieldElement.Obstacle;
-import fr.uge.gameElement.utility.MovementZone;
+import fr.uge.gameEngine.entity.Enemy;
+import fr.uge.gameEngine.entity.Player;
+import fr.uge.gameEngine.fieldElement.Decoration;
+import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.fieldElement.Obstacle;
+import fr.uge.gameEngine.utility.MovementZone;
 
 public class Parser {
   // Those field will be constructed while parsing the file
@@ -253,10 +253,11 @@ public class Parser {
     MovementZone zone = new MovementZone(Integer.parseInt(monster.get("zone").get(1).content()),
         Integer.parseInt(monster.get("zone").get(3).content()), Integer.parseInt(monster.get("zone").get(6).content()),
         Integer.parseInt(monster.get("zone").get(8).content()));
+    int damage = Integer.parseInt(monster.get("damage").get(0).content());
 
     enemies.add(new Enemy(x, y, 10, health, monster.get("name").get(0).content(),
         SkinEnemy.valueOf(monster.get("skin").get(0).content()), zone,
-        Behavior.valueOf(monster.get("behavior").get(0).content())));
+        Behavior.valueOf(monster.get("behavior").get(0).content()), damage));
   }
 
   /**

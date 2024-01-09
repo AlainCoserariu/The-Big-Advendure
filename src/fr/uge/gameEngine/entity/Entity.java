@@ -1,6 +1,7 @@
-package fr.uge.gameElement.entity;
+package fr.uge.gameEngine.entity;
 
-import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.utility.Hitbox;
 
 public sealed interface Entity permits Enemy, Player{
   void move(double x, double y);
@@ -10,6 +11,8 @@ public sealed interface Entity permits Enemy, Player{
   void heal(int healPoint);
 
   boolean collideWithObstacle(FieldElement field[][]);
+  
+  void updateIframes();
   
   // ---------------------------------GETTERS---------------------------------
   
@@ -24,6 +27,10 @@ public sealed interface Entity permits Enemy, Player{
   int getMaxHealth();
   
   EntityStats getBaseEntity();
+  
+  Hitbox getHitbox();
+  
+  int getIframe();
   
   String getName();
 }

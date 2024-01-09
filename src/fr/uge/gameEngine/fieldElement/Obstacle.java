@@ -1,7 +1,7 @@
-package fr.uge.gameElement.fieldElement;
+package fr.uge.gameEngine.fieldElement;
 
 import fr.uge.enums.ObstacleEnum;
-import fr.uge.gameElement.utility.Hitbox;
+import fr.uge.gameEngine.utility.Hitbox;
 
 public final class Obstacle implements FieldElement {
   private final double x;

@@ -1,4 +1,4 @@
-package fr.uge.gameElement.fieldElement;
+package fr.uge.gameEngine.fieldElement;
 
 import fr.uge.enums.DecorationEnum;
 

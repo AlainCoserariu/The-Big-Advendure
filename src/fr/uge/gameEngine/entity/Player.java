@@ -1,9 +1,11 @@
-package fr.uge.gameElement.entity;
+package fr.uge.gameEngine.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import fr.uge.enums.SkinPlayer;
-import fr.uge.gameElement.fieldElement.FieldElement;
+import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.utility.Hitbox;
 
 public final class Player implements Entity {
   private final EntityStats player;
@@ -20,11 +22,11 @@ public final class Player implements Entity {
    */
   public Player(double x, double y, double speed, int maxHealth, String name, SkinPlayer skin) {
     Objects.requireNonNull(name);
-    
-    player = new EntityStats(x, y, speed, maxHealth, name);
+
+    player = new EntityStats(x, y, speed, maxHealth, name, 60);
     this.skin = skin;
   }
-  
+
   public void move(double x, double y) {
     player.move(x, y);
   }
@@ -35,6 +37,17 @@ public final class Player implements Entity {
 
   public void heal(int healPoint) {
     player.heal(healPoint);
+  }
+
+  public boolean collideWithEnemy(List<Enemy> enemies) {
+    var collidingEnemy = enemies.stream().filter(e -> e.getHitbox().collide(player.getHitbox())).findFirst();
+    
+    if (collidingEnemy.isPresent()) {
+      if (getIframe() == 0) takeDamage(collidingEnemy.get().getDamage());
+      return true;
+    }
+    
+    return false;
   }
 
   public double getX() {
@@ -48,7 +61,7 @@ public final class Player implements Entity {
   public double getSpeed() {
     return player.getSpeed();
   }
-  
+
   public SkinPlayer getSkin() {
     return skin;
   }
@@ -76,5 +89,20 @@ public final class Player implements Entity {
   @Override
   public String getName() {
     return player.getName();
+  }
+
+  @Override
+  public Hitbox getHitbox() {
+    return player.getHitbox();
+  }
+
+  @Override
+  public void updateIframes() {
+    player.updateIframes();
+  }
+
+  @Override
+  public int getIframe() {
+    return player.getIframe();
   }
 }

@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import fr.uge.GameParameter;
-import fr.uge.gameElement.fieldElement.Decoration;
-import fr.uge.gameElement.fieldElement.FieldElement;
-import fr.uge.gameElement.fieldElement.Obstacle;
+import fr.uge.gameEngine.fieldElement.Decoration;
+import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.fieldElement.Obstacle;
 
 class DisplayField {
   /**

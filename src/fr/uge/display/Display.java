@@ -1,6 +1,7 @@
 package fr.uge.display;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import fr.uge.GameParameter;
-import fr.uge.gameElement.Panel;
+import fr.uge.gameEngine.Panel;
 import fr.umlv.zen5.ApplicationContext;
 
 public class Display {
@@ -29,12 +30,14 @@ public class Display {
   public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context,
       GameParameter parameters) {
     context.renderFrame(graphics -> {
+      graphics.setFont(new Font("DIALOG", 0, 12));
       graphics.setColor(Color.DARK_GRAY);
       graphics.fill(new Rectangle2D.Float(0, 0, parameters.getWindowWidth(), parameters.getWindowHeight()));
 
       DisplayField.displayField(pan.getField(), images, graphics, parameters);
-      DipslayEntity.displayPlayer(pan.getPlayer(), images, graphics, parameters);
-      DipslayEntity.displayEnemy(pan.getEnemies(), images, graphics, parameters);
+      DipslayEntity.displayPlayer(pan.getPlayer(), images.get(pan.getPlayer().getSkin().toString()), graphics,
+          parameters.getTileSize());
+      DipslayEntity.displayEnemies(pan.getEnemies(), images, graphics, parameters.getTileSize());
     });
   }
 
