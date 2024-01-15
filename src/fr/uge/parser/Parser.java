@@ -251,8 +251,8 @@ public class Parser {
     double y = Integer.parseInt(monster.get("position").get(3).content()) + 0.5;
     int health = Integer.parseInt(monster.get("health").get(0).content());
     MovementZone zone = new MovementZone(Integer.parseInt(monster.get("zone").get(1).content()),
-        Integer.parseInt(monster.get("zone").get(3).content()), Integer.parseInt(monster.get("zone").get(6).content()),
-        Integer.parseInt(monster.get("zone").get(8).content()));
+        Integer.parseInt(monster.get("zone").get(1).content()) + Integer.parseInt(monster.get("zone").get(6).content()), Integer.parseInt(monster.get("zone").get(3).content()),
+        Integer.parseInt(monster.get("zone").get(3).content()) + Integer.parseInt(monster.get("zone").get(8).content()));
     int damage = Integer.parseInt(monster.get("damage").get(0).content());
 
     enemies.add(new Enemy(x, y, 10, health, monster.get("name").get(0).content(),

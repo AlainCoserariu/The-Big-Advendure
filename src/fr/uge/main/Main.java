@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import fr.uge.GameParameter;
 import fr.uge.UserEvent;
 import fr.uge.display.Display;
-import fr.uge.gameEngine.Interaction;
+import fr.uge.gameEngine.GameUpdate;
 import fr.uge.gameEngine.Panel;
 import fr.umlv.zen5.Application;
 import fr.umlv.zen5.ApplicationContext;
@@ -29,7 +29,7 @@ public class Main {
 
       userInput.handleEvent(panel, gameParameters, context);
       
-      Interaction.interact(panel);
+      GameUpdate.update(panel, gameParameters);
 
       // PROTOTYPE Debug variable, compute the time elapsed since the start of the
       // frame, help to keep track of performances

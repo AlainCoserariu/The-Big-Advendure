@@ -33,8 +33,8 @@ public class Hitbox {
   }
   
   public boolean collide(Hitbox other) {
-    boolean isOverlapingX = (leftX < other.rightX) && (rightX > other.leftX);
-    boolean isOverlapingY = (topY < other.bottomY) && (bottomY > other.topY);
+    boolean isOverlapingX = (leftX <= other.rightX) && (rightX >= other.leftX);
+    boolean isOverlapingY = (topY <= other.bottomY) && (bottomY >= other.topY);
     
     return (isOverlapingX && isOverlapingY);
   }
