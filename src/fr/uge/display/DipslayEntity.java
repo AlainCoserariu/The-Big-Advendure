@@ -3,6 +3,7 @@ package fr.uge.display;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +64,20 @@ class DipslayEntity {
     displayGreenHealthBar(graphics, x, y, widthGreenBar, heightHealthBar);
   }
 
+  private static void displaySword(Player p, BufferedImage swordImage, Graphics2D graphics, int tileSize) {
+    int xPosScreen = (int) (p.getWeapon().getX() * tileSize);
+    int yPosScreen = (int) (p.getWeapon().getY() * tileSize);
+    
+    AffineTransform tmpAffineTransform = graphics.getTransform();
+    
+    graphics.rotate(((p.getDirection() + 1) % 4) * (-Math.PI / 2), xPosScreen, yPosScreen);
+   
+    graphics.drawImage(swordImage, null, xPosScreen - tileSize / 2, yPosScreen - tileSize / 2);
+    
+    graphics.setTransform(tmpAffineTransform);
+  }
+
+  
   /**
    * Display the player with his name and his health bar
    * 
@@ -71,11 +86,15 @@ class DipslayEntity {
    * @param graphics
    * @param parameters
    */
-  public static void displayPlayer(Player p, BufferedImage playerImage, Graphics2D graphics, int tileSize) {
+  public static void displayPlayer(Player p, Map<String, BufferedImage> images, Graphics2D graphics, int tileSize) {
     int xPosScreen = (int) (p.getX() * tileSize);
     int yPosScreen = (int) (p.getY() * tileSize);
+    
+    if (p.isAttacking()) {
+      displaySword(p, images.get(p.getWeapon().getSkin().toString()), graphics, tileSize);
+    }
 
-    graphics.drawImage(playerImage, null, xPosScreen - tileSize / 2, yPosScreen - tileSize / 2);
+    graphics.drawImage(images.get(p.getSkin().toString()), null, xPosScreen - tileSize / 2, yPosScreen - tileSize / 2);
     graphics.setColor(Color.white);
     graphics.drawString(p.getName(), xPosScreen - (graphics.getFontMetrics().stringWidth(p.getName())) / 2,
         yPosScreen + tileSize / 2 + 10);      

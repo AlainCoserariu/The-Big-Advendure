@@ -33,4 +33,8 @@ public sealed interface Entity permits Enemy, Player{
   int getIframe();
   
   String getName();
+
+  int getDirection();
+
+  void setDirection(int direction);
 }

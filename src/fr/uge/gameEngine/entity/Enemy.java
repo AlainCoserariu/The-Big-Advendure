@@ -18,7 +18,6 @@ public final class Enemy implements Entity {
   private final Behavior behavior;
   private final int damage;
 
-  private int direction; // 0 = north, 1 = west, 2 = south, 3 = east
   private double distanceToTravel = 0; // Distance remaining to travel for automatic movement
 
   /**
@@ -40,18 +39,17 @@ public final class Enemy implements Entity {
     this.zone = zone;
     this.behavior = behavior;
     this.damage = damage;
-    direction = 0;
+    setDirection(2);
   }
 
   public void selectRandomDestination() {
-    direction = RandomGenerator.randint(0, 3);
+    setDirection(RandomGenerator.randint(0, 3));
     distanceToTravel = RandomGenerator.randint(1, 3);
-    System.out.println(distanceToTravel);
     
     double newX = getX();
     double newY = getY();
     
-    switch (direction) {
+    switch (getDirection()) {
     case 0: newY -= distanceToTravel; break;
     case 1: newX -= distanceToTravel; break;
     case 2: newY += distanceToTravel; break;
@@ -64,9 +62,7 @@ public final class Enemy implements Entity {
   
   private boolean collideWithPlayer(Player player) {
     if (player.getHitbox().collide(getHitbox())) {
-      if (player.getIframe() == 0) {
-        player.takeDamage(damage);
-      }
+      player.takeDamage(damage);
       return true;
     }
     return false;
@@ -76,7 +72,7 @@ public final class Enemy implements Entity {
     double x = getX();
     double y = getY();
     
-    switch (direction) {
+    switch (getDirection()) {
     case 0: move(getX(), getY() - step); break;
     case 1: move(getX() - step, getY()); break;
     case 2: move(getX(), getY() + step); break;
@@ -179,5 +175,15 @@ public final class Enemy implements Entity {
   @Override
   public int getIframe() {
     return enemy.getIframe();
+  }
+  
+  @Override
+  public int getDirection() {
+    return enemy.getDirection();
+  }
+  
+  @Override
+  public void setDirection(int direction) {
+    enemy.setDirection(direction);
   }
 }

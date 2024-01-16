@@ -31,11 +31,11 @@ public class Display {
       GameParameter parameters) {
     context.renderFrame(graphics -> {
       graphics.setFont(new Font("DIALOG", 0, 12));
-      graphics.setColor(Color.DARK_GRAY);
+      graphics.setColor(Color.BLACK);
       graphics.fill(new Rectangle2D.Float(0, 0, parameters.getWindowWidth(), parameters.getWindowHeight()));
 
       DisplayField.displayField(pan.getField(), images, graphics, parameters);
-      DipslayEntity.displayPlayer(pan.getPlayer(), images.get(pan.getPlayer().getSkin().toString()), graphics,
+      DipslayEntity.displayPlayer(pan.getPlayer(), images, graphics,
           parameters.getTileSize());
       DipslayEntity.displayEnemies(pan.getEnemies(), images, graphics, parameters.getTileSize());
     });

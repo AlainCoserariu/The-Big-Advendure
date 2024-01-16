@@ -39,4 +39,7 @@ public class Hitbox {
     return (isOverlapingX && isOverlapingY);
   }
   
+  public double getSize() {
+    return size;
+  }
 }

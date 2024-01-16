@@ -30,7 +30,7 @@ public class Main {
       userInput.handleEvent(panel, gameParameters, context);
       
       GameUpdate.update(panel, gameParameters);
-
+      
       // PROTOTYPE Debug variable, compute the time elapsed since the start of the
       // frame, help to keep track of performances
       var calcTime = (System.nanoTime() - time) / 1000000;
@@ -47,7 +47,7 @@ public class Main {
           .append(calcTime)
           .append("ms");
 
-      System.out.println(debugInfo);
+      // System.out.println(debugInfo);
       debugInfo.delete(0, debugInfo.length());
     }
   }

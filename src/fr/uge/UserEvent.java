@@ -52,13 +52,15 @@ public class UserEvent {
    * @param deltaX
    * @param deltaY
    */
-  private void movePlayer(Panel panel, KeyboardKey direction, double deltaX, double deltaY) {
+  private boolean movePlayer(Panel panel, KeyboardKey direction, double deltaX, double deltaY) {
     if (keyPressed.get(direction)) {
       panel.getPlayer().move(panel.getPlayer().getX() + deltaX, panel.getPlayer().getY() + deltaY);
       if (panel.getPlayer().collideWithObstacle(panel.getField()) || panel.getPlayer().collideWithEnemy(panel.getEnemies())) {
         panel.getPlayer().move(panel.getPlayer().getX() - deltaX, panel.getPlayer().getY() - deltaY);
       }
+      return true;
     }
+    return false;
   }
   
   /**
@@ -70,16 +72,28 @@ public class UserEvent {
   private void handlePlayerMovement(Panel panel, GameParameter parameters) {
     double step = panel.getPlayer().getSpeed() / parameters.getFramerate();
     
-    movePlayer(panel, KeyboardKey.UP, 0, -step);
-    movePlayer(panel, KeyboardKey.DOWN, 0, step);
-    movePlayer(panel, KeyboardKey.LEFT, -step, 0);
-    movePlayer(panel, KeyboardKey.RIGHT, step, 0);
+    if (movePlayer(panel, KeyboardKey.UP, 0, -step)) panel.getPlayer().setDirection(0);
+    if (movePlayer(panel, KeyboardKey.LEFT, -step, 0)) panel.getPlayer().setDirection(1);
+    if (movePlayer(panel, KeyboardKey.DOWN, 0, step)) panel.getPlayer().setDirection(2);
+    if (movePlayer(panel, KeyboardKey.RIGHT, step, 0)) panel.getPlayer().setDirection(3);
+    
+    if (panel.getPlayer().isAttacking()) {
+      panel.getPlayer().updateWeaponPos();
+    }
+  }
+  
+  private void handleSpaceBarAction(Panel panel, GameParameter parameters) {
+    panel.getPlayer().attack();
   }
   
   public void handleEvent(Panel panel, GameParameter parameters, ApplicationContext context) {
     getEvent(context);
     
     handlePlayerMovement(panel, parameters);
+    
+    if (keyPressed.get(KeyboardKey.SPACE)) {
+      handleSpaceBarAction(panel, parameters);      
+    }
     
     if (keyPressed.get(KeyboardKey.Q)) {
       context.exit(0);

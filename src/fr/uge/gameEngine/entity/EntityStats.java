@@ -1,6 +1,5 @@
 package fr.uge.gameEngine.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 import fr.uge.gameEngine.fieldElement.FieldElement;
@@ -14,6 +13,8 @@ public class EntityStats {
   private double x;
   private double y;
 
+  private int direction; // 0 = north, 1 = west, 2 = south, 3 = east
+  
   private double speed; // Tiles per seconds traveled
 
   private int health;
@@ -50,6 +51,8 @@ public class EntityStats {
 
     this.iframeDuration = iframeDuration;
     iframe = 0;
+    
+    this.direction = 2;
 
     this.name = name;
   }
@@ -62,8 +65,10 @@ public class EntityStats {
   }
 
   public void takeDamage(int damage) {
-    health = Integer.max(0, health - damage);
-    iframe = iframeDuration;
+    if (iframe == 0) {
+      health = Integer.max(0, health - damage);
+      iframe = iframeDuration;      
+    }
   }
   
   public void updateIframes() {
@@ -131,5 +136,13 @@ public class EntityStats {
   
   public int getIframe() {
     return iframe;
+  }
+  
+  public int getDirection() {
+    return direction;
+  }
+  
+  public void setDirection(int direction) {
+    this.direction = direction;
   }
 }

@@ -7,6 +7,8 @@ public class GameUpdate {
     panel.getEnemies().forEach(e -> {
       e.moveEnemy(panel, framerate);
     });
+    
+    panel.getEnemies().removeIf(e -> e.getHealth() <= 0);
   }
 
   private static void updateIframes(Panel panel) {
@@ -16,6 +18,7 @@ public class GameUpdate {
 
   public static void update(Panel panel, GameParameter parameters) {
     panel.getPlayer().collideWithEnemy(panel.getEnemies());
+    panel.getPlayer().checkHitEnemies(panel.getEnemies());
 
     updateEnemies(panel, parameters.getFramerate());
 
