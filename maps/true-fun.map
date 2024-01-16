@@ -1,57 +1,57 @@
 [grid]
-  size: (65 x 47)
+  size: (100 x 47)
   encodings: LAVA(L) PLANK(p) GRASS(g) TREE(T) TREES(E) FLOWER(f) WALL(W)
     ROCK(R) LILY(l) FENCE(F) WATER(Z) HUSK(H) HUSKS(I) ROAD(r) HOUSE(h)
     REED(D) SIGN(S) ALGAE(A) TILE(t) TOWER (G)
     BRICK(K) DOOR(O) RUBBLE(Q) CLIFF(c) BOG(o)
   data: """
-  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLEEEEEEZZZZZZZZZZZZZZZZZZZZZ
-  EETET          TTEET            LLLL           DDZZZZZZZZZZZZZZZZ
-  ET                               LL               ZZZZZZZZZZcZZZZ
-  E                                tt                     ZZZZZZZZZ
-  E       g f                 IH   LL                        ZZZZZZ
-  E        g                  IHHIILL                         ZZZZZ
-  E                              IILL                         ZZZZZ
-  E                             LLLLLL          T             lZZZZ
-  E                             LLLLLLLL         E          TEZZZAZ
-  E                              LLLL                        TZZ  E
-  E                              L                            ll  E
-  E                                                           ZZ  E
-  E                                                          ZZZ  E
-  E                                                          ZZ   E
-  E                                        ftt              ZZ    E
-  E                                         tt             ZZA    E
-  E             h                                        ZZZZZ    E
-  E            FF FFFF                                    ZZZ     E
-  E              rrrrr                                    Z       E
-  E                                                       Z       E
-  Q                                   D                   Z       E
-  QR       DDD     EETET             DZZZl              T Z       E
-  ZZZZZZZZZZZZZZZtZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ       E
-  QQR                                            f                E
-  Q             S                                                 E
-  Q                                                               E
-  Q                                                      H        E
-  ET                                 IH                  II       E
-  WWWG                              IH                            E
-  W  F                                 I                          E
-  W  F                                                            E
-  W                                                               E
-  W  F                     E                                      E
-  WWWG                     hEE                                    E
-  E                                              WWWWWWWWW WWWWWWWW
-  E                                              WttttttttttttttttW
-  E                                    g         WttttttttttttttttW
-  E                                     g        WttttttttttttttttW
-  E        FFFFF                                 WttttttttttttttttW
-  E        F                       WWWWWWWWWWOWWWWttttttttttttttttW
-  E        F    F                  WttttttttttttttttttttttttttttttW
-  E        F    F                  WttttttttttttttttttttttttttttttW
-  E        FFFFFQ                  WttttttttttttttttttttttttttttttW
-  E                                 ttttttttttttttttttttttttttttttW
-  Q                                WttttttttttttttttttttttttttttttW
-  QQ                               WttttttttttttttttttttttttttttttW
-  QQQooooooooooooooooooooooooooooooWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+  EEEEEEEEEEEEEEEEEEEEEEEEEEEEEELLLLLLLLEEEEEEZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
+  EETET          TTEET            LLLL                                              DDZZZZZZZZZZZZZZZZ
+  ET                               LL                                                  ZZZZZZZZZZcZZZZ
+  E                                tt                                                        ZZZZZZZZZ
+  E       g f                 IH   LL                                                           ZZZZZZ
+  E        g                  IHHIILL                                                            ZZZZZ
+  E                              IILL                                                            ZZZZZ
+  E                             LLLLLL          T                                                lZZZZ
+  E                             LLLLLLLL         E                                             TEZZZAZ
+  E                              LLLL                                                           TZZ  E
+  E                              L                                                               ll  E
+  E                                                                                              ZZ  E
+  E                                                                                             ZZZ  E
+  E                                                                                             ZZ   E
+  E                                        ftt                                                 ZZ    E
+  E                                         tt                                                ZZA    E
+  E             h                                                                           ZZZZZ    E
+  E            FF FFFF                                                                       ZZZ     E
+  E              rrrrr                                                                       Z       E
+  E                                                                                          Z       E
+  Q                                   D                                                      Z       E
+  QR       DDD     EETET             DZZZl                                                 T Z       E
+  ZZZZZZZZZZZZZZZtZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ       E
+  QQR                                            f                                                   E
+  Q             S                                                                                    E
+  Q                                                                                                  E
+  Q                                                      H                                           E
+  ET                                 IH                  II                                          E
+  WWWG                              IH                                                               E
+  W  F                                 I                                                             E
+  W  F                                                                                               E
+  W                                                                                                  E
+  W  F                     E                                                                         E
+  WWWG                     hEE                                                                       E
+  E                                                                                 WWWWWWWWW WWWWWWWW
+  E                                                                                 WttttttttttttttttW
+  E                                                                       g         WttttttttttttttttW
+  E                                                                        g        WttttttttttttttttW
+  E        FFFFF                                                                    WttttttttttttttttW
+  E        F                                                          WWWWWWWWWWOWWWWttttttttttttttttW
+  E        F    F                                                     WttttttttttttttttttttttttttttttW
+  E        F    F                                                     WttttttttttttttttttttttttttttttW
+  E        FFFFFQ                                                     WttttttttttttttttttttttttttttttW
+  E                                                                    ttttttttttttttttttttttttttttttW
+  Q                                                                   WttttttttttttttttttttttttttttttW
+  QQ                                                                  WttttttttttttttttttttttttttttttW
+  QQQooooooooooooooooooooooooooooooWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
   """
 
 [element]

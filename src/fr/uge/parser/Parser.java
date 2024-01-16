@@ -3,13 +3,10 @@ package fr.uge.parser;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.zip.DataFormatException;
 
 import fr.uge.enums.Behavior;
 import fr.uge.enums.DecorationEnum;
