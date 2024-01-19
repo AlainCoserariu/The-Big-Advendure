@@ -10,6 +10,7 @@ import java.util.Map;
 
 import fr.uge.enums.Behavior;
 import fr.uge.enums.DecorationEnum;
+import fr.uge.enums.FoodEnum;
 import fr.uge.enums.ObstacleEnum;
 import fr.uge.enums.SkinEnemy;
 import fr.uge.enums.SkinItem;
@@ -20,12 +21,17 @@ import fr.uge.gameEngine.entity.Player;
 import fr.uge.gameEngine.fieldElement.Decoration;
 import fr.uge.gameEngine.fieldElement.FieldElement;
 import fr.uge.gameEngine.fieldElement.Obstacle;
+import fr.uge.gameEngine.item.Food;
+import fr.uge.gameEngine.item.Item;
+import fr.uge.gameEngine.item.Weapon;
+import fr.uge.gameEngine.utility.Hitbox;
 import fr.uge.gameEngine.utility.MovementZone;
 
 public class Parser {
   // Those field will be constructed while parsing the file
   private static Player player = null;
   private final static List<Enemy> enemies = new ArrayList<Enemy>();
+  private final static List<Item> items = new ArrayList<Item>();
   private static FieldElement[][] field = null;
 
   private static int cmptToken = 0;
@@ -232,7 +238,7 @@ public class Parser {
   }
 
   /**
-   * Parse all the monster data into the enemy map
+   * Parse all the monster data into the enemy list
    * 
    * @param monster
    */
@@ -256,6 +262,40 @@ public class Parser {
         SkinEnemy.valueOf(monster.get("skin").get(0).content()), zone,
         Behavior.valueOf(monster.get("behavior").get(0).content()), damage));
   }
+  
+  /**
+   * Parse item data into the list of item
+   * 
+   * @param item
+   */
+  private static void parseItem(Map<String, List<Result>> item) {
+    if (item.get("name").isEmpty() || item.get("skin").isEmpty() || item.get("position").isEmpty()) {
+      errors.add("Item block isn't correctly formed, missing at least one of the following field : name, skin, position");
+    }
+
+    double x = Integer.parseInt(item.get("position").get(1).content()) + 0.5;
+    double y = Integer.parseInt(item.get("position").get(3).content()) + 0.5;
+    
+    if (!item.get("damage").isEmpty()) {
+      int damage = Integer.parseInt(item.get("damage").get(0).content());
+      items.add(new Weapon(x, y, damage, new Hitbox(x, y, 1), SkinItem.valueOf(item.get("skin").get(0).content()), item.get("name").get(0).content()));
+      return;
+    } else if (FoodEnum.contains(item.get("skin").get(0).content())) {
+      items.add(new Food(x, y, 1000, new Hitbox(x, y, 1), FoodEnum.valueOf(item.get("skin").get(0).content()), item.get("name").get(0).content()));
+    }
+  }
+  
+  private static void parseObstacle(Map<String, List<Result>> obstacle) {
+    if (obstacle.get("skin").isEmpty() || obstacle.get("position").isEmpty()) {
+      errors.add(
+          "Monster block isn't correctly formed, missing at least one of the following field : name, skin, position, health, zone, behavior, damage");
+    }
+
+    int x = Integer.parseInt(obstacle.get("position").get(1).content());
+    int y = Integer.parseInt(obstacle.get("position").get(3).content());
+    
+    field[y][x] = new Obstacle(x, y, ObstacleEnum.valueOf(obstacle.get("skin").get(0).content()));
+  }
 
   /**
    * Implement a element
@@ -267,14 +307,13 @@ public class Parser {
       parsePlayer(elements);
     } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("enemy")) {
       parseMonster(elements);
-    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("obstacle")) {
-
+    } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("obstacle") && field != null) {
+      parseObstacle(elements);
     } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("friend")) {
 
     } else if (!elements.get("kind").isEmpty() && elements.get("kind").get(0).content().equals("item")) {
-
+      parseItem(elements);
     }
-
   }
 
   private static boolean checkPositionField(List<Result> positionField) {
@@ -403,7 +442,7 @@ public class Parser {
         && !ObstacleEnum.contains(elements.get("skin").get(0).content())
         && !SkinEnemy.contains(elements.get("skin").get(0).content())
         && !SkinPlayer.contains(elements.get("skin").get(0).content())
-        && !SkinItem.contains(elements.get("skin").get(0).content())) {
+        && !SkinItem.contains(elements.get("skin").get(0).content()) && !FoodEnum.contains(elements.get("skin").get(0).content())) {
       errors.add("Line " + cmptLine + ": " + elements.get("skin").get(0).content() + " is not valide");
     }
   }
@@ -781,8 +820,16 @@ public class Parser {
   public static List<Enemy> getEnemies() {
     return enemies;
   }
+  
+  public static List<Item> getItems() {
+    return items;
+  }
 
   public static FieldElement[][] getField() {
     return field;
+  }
+  
+  public static List<String> getErrors() {
+    return errors;
   }
 }

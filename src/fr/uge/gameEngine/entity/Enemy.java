@@ -1,7 +1,6 @@
 package fr.uge.gameEngine.entity;
 
 import java.util.Objects;
-import java.util.Random;
 
 import fr.uge.enums.Behavior;
 import fr.uge.enums.SkinEnemy;

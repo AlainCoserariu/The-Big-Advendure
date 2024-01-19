@@ -97,7 +97,7 @@ class DipslayEntity {
     graphics.drawImage(images.get(p.getSkin().toString()), null, xPosScreen - tileSize / 2, yPosScreen - tileSize / 2);
     graphics.setColor(Color.white);
     graphics.drawString(p.getName(), xPosScreen - (graphics.getFontMetrics().stringWidth(p.getName())) / 2,
-        yPosScreen + tileSize / 2 + 10);      
+        yPosScreen + tileSize / 2 + 10);
     displayHealthBar(p.getBaseEntity(), graphics, tileSize);
   }
 

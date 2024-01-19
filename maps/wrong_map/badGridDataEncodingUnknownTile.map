@@ -1,8 +1,0 @@
-[grid]
-  size: (4 x 3)
-  encodings: WALDO(W)
-  data: """
-    WWWW
-    W  W
-    WWWW
-    """

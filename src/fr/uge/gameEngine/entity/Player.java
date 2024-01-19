@@ -3,20 +3,22 @@ package fr.uge.gameEngine.entity;
 import java.util.List;
 import java.util.Objects;
 
-import fr.uge.enums.SkinItem;
 import fr.uge.enums.SkinPlayer;
-import fr.uge.gameEngine.Weapon;
 import fr.uge.gameEngine.fieldElement.FieldElement;
+import fr.uge.gameEngine.item.Food;
+import fr.uge.gameEngine.item.Item;
+import fr.uge.gameEngine.item.Weapon;
 import fr.uge.gameEngine.utility.Hitbox;
 
 public final class Player implements Entity {
   private final EntityStats player;
   private final SkinPlayer skin;
-  
-  private final Weapon weapon;
+
+  private final Inventory inventory;
+  private Weapon weapon;
   private final int attackFrameDuration; // How many frame the weapon is out
   private int attackFrame;
-  
+
   /**
    * Player constructor
    * 
@@ -31,28 +33,33 @@ public final class Player implements Entity {
 
     player = new EntityStats(x, y, speed, maxHealth, name, 60);
     this.skin = skin;
+
+    inventory = new Inventory();
     
-    weapon = new Weapon(-1, y -1, 5, new Hitbox(-1, -1, 1), SkinItem.SWORD);
+    weapon = null;
     attackFrameDuration = 60;
     attackFrame = 0;
   }
 
+  @Override
   public void move(double x, double y) {
     player.move(x, y);
   }
 
+  @Override
   public void takeDamage(int damage) {
     player.takeDamage(damage);
   }
 
+  @Override
   public void heal(int healPoint) {
-    player.heal(healPoint);
+    player.heal(getMaxHealth());
   }
-  
+
   public boolean isAttacking() {
     return attackFrame > 0;
   }
-  
+
   public void updateWeaponPos() {
     switch (getDirection()) {
     case 0:
@@ -71,36 +78,48 @@ public final class Player implements Entity {
       break;
     }
   }
-  
+
   public void attack() {
-    if (isAttacking()) return;
-    
+    if (isAttacking())
+      return;
+
     attackFrame = attackFrameDuration;
     updateWeaponPos();
   }
 
+  public void action() {
+    if (inventory.getSize() == 0) {
+      return;
+    }
+    switch (inventory.getItem(0)) {
+    case Weapon w -> {
+      weapon = w;
+      attack();
+    }
+    case Food f -> {
+      heal(f.healingPoint());
+      inventory.delItemIndex(0);
+    }
+    }
+  }
+
   public boolean collideWithEnemy(List<Enemy> enemies) {
     var collidingEnemy = enemies.stream().filter(e -> e.getHitbox().collide(player.getHitbox())).findFirst();
-    
+
     if (collidingEnemy.isPresent()) {
       takeDamage(collidingEnemy.get().getDamage());
       return true;
     }
-    
+
     return false;
   }
   
-  /**
-   * Check if an enemy is hit by the weapon of the player
-   * 
-   * @param enemy
-   */
-  public void checkHitEnemies(List<Enemy> enemy) {
-    enemy.forEach(e -> {
-      if (e.getHitbox().collide(weapon.getHitbox())) {
-        e.takeDamage(weapon.getDamage());
-      }
-    });
+  public void collideWithItem(List<Item> items) {
+    var collidingItem = items.stream().filter(i -> i.getHitbox().collide(player.getHitbox())).findFirst();
+    if (collidingItem.isPresent()) {
+      inventory.addItem(collidingItem.get());
+      items.remove(collidingItem.get());
+    }
   }
 
   public double getX() {
@@ -117,6 +136,10 @@ public final class Player implements Entity {
 
   public SkinPlayer getSkin() {
     return skin;
+  }
+
+  public Inventory getInventory() {
+    return inventory;
   }
   
   public Weapon getWeapon() {
@@ -156,19 +179,22 @@ public final class Player implements Entity {
   @Override
   public void updateIframes() {
     player.updateIframes();
-    if (attackFrame > 0) attackFrame -= 1;
+    if (attackFrame > 0)
+      attackFrame -= 1;
+    else
+      weapon = null;
   }
 
   @Override
   public int getIframe() {
     return player.getIframe();
   }
-  
+
   @Override
   public int getDirection() {
     return player.getDirection();
   }
-  
+
   @Override
   public void setDirection(int direction) {
     player.setDirection(direction);

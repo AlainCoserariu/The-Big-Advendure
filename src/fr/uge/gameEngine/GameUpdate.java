@@ -1,12 +1,15 @@
 package fr.uge.gameEngine;
 
 import fr.uge.GameParameter;
+import fr.uge.Options;
 
 public class GameUpdate {
-  private static void updateEnemies(Panel panel, int framerate) {
-    panel.getEnemies().forEach(e -> {
-      e.moveEnemy(panel, framerate);
-    });
+  private static void updateEnemies(Panel panel, int framerate, Options options) {
+    if (!options.dryRun()) {
+      panel.getEnemies().forEach(e -> {
+        e.moveEnemy(panel, framerate);
+      });      
+    }
     
     panel.getEnemies().removeIf(e -> e.getHealth() <= 0);
   }
@@ -16,11 +19,14 @@ public class GameUpdate {
     panel.getEnemies().forEach(e -> e.updateIframes());
   }
 
-  public static void update(Panel panel, GameParameter parameters) {
+  public static void update(Panel panel, GameParameter parameters, Options options) {
     panel.getPlayer().collideWithEnemy(panel.getEnemies());
-    panel.getPlayer().checkHitEnemies(panel.getEnemies());
+    panel.getPlayer().collideWithItem(panel.getItems());
+    if (panel.getPlayer().isAttacking()) {
+      panel.getPlayer().getWeapon().checkHitEnemies(panel.getEnemies());
+    }
 
-    updateEnemies(panel, parameters.getFramerate());
+    updateEnemies(panel, parameters.getFramerate(), options);
 
     updateIframes(panel);
 

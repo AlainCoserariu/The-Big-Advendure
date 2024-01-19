@@ -78,7 +78,7 @@ public class EntityStats {
   }
 
   public void heal(int healPoint) {
-    health = Integer.max(health + healPoint, maxHealth);
+    health = Integer.min(health + healPoint, maxHealth);
   }
   
   /**

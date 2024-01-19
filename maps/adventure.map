@@ -75,12 +75,28 @@
   kind: item
 
 [element]
+  name: cake
+  skin: CAKE
+  position: (1,32)
+  kind: item
+
+[element]
   name: waldo
   skin: CRAB
   position: (38, 24)
   kind: enemy
   health: 10
   zone: (38, 24) (10 x 8)
+  behavior: stroll
+  damage: 5
+
+[element]
+  name: wuldo
+  skin: CRAB
+  position: (37, 24)
+  kind: enemy
+  health: 10
+  zone: (37, 24) (10 x 8)
   behavior: stroll
   damage: 5
 

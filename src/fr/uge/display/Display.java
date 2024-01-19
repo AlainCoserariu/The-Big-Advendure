@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import fr.uge.GameParameter;
+import fr.uge.UserEvent;
 import fr.uge.gameEngine.Panel;
 import fr.umlv.zen5.ApplicationContext;
 
@@ -86,16 +87,18 @@ public class Display {
    * @param parameters
    */
   public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context,
-      GameParameter parameters) {
+      GameParameter parameters, UserEvent userEvent) {
     context.renderFrame(graphics -> {
       AffineTransform tmpTransform = graphics.getTransform();
       initGraphics(pan, graphics, parameters);
       
       DisplayField.displayField(pan.getField(), images, graphics, parameters);
+      DisplayItem.displayItems(pan.getItems(), images, graphics, parameters.getTileSize());
       DipslayEntity.displayEnemies(pan.getEnemies(), images, graphics, parameters.getTileSize());
       DipslayEntity.displayPlayer(pan.getPlayer(), images, graphics, parameters.getTileSize());
       
       graphics.setTransform(tmpTransform);
+      DisplayInventory.displayInventory(pan, parameters, graphics, images, userEvent);
     });
   }
 

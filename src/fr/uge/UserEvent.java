@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.uge.gameEngine.Panel;
-import fr.uge.gameEngine.entity.Player;
 import fr.umlv.zen5.ApplicationContext;
 import fr.umlv.zen5.Event;
 import fr.umlv.zen5.Event.Action;
@@ -15,14 +14,24 @@ import fr.umlv.zen5.KeyboardKey;
  * game
  */
 public class UserEvent {
+  private int playerAction; // 0 : in game, 1 : in inventory
+  private int selectedItem; // Selected item in inventory
+  
+  private boolean flagPressed; // Tell if a key was pressed last frame
+  
   private final Map<KeyboardKey, Boolean> keyPressed;
 
+  
   public UserEvent() {
     keyPressed = new HashMap<KeyboardKey, Boolean>();
 
     for (KeyboardKey key : KeyboardKey.values()) {
       keyPressed.put(key, false);
     }
+    
+    playerAction = 0;
+    selectedItem = 0;
+    flagPressed = false;
   }
 
   /**
@@ -40,6 +49,7 @@ public class UserEvent {
       } else if (action == Action.KEY_RELEASED) {
         KeyboardKey key = event.getKey();
         keyPressed.put(key, false);
+        flagPressed = false;
       }
     }
   }
@@ -82,17 +92,50 @@ public class UserEvent {
     }
   }
   
-  private void handleSpaceBarAction(Panel panel, GameParameter parameters) {
-    panel.getPlayer().attack();
+  private void handleSpaceBarAction(Panel panel) {
+    if (keyPressed.get(KeyboardKey.SPACE)) {
+      panel.getPlayer().action();
+    }
+  }
+  
+  private void handleInventoryButton(Panel panel) {
+    if (keyPressed.get(KeyboardKey.I)) {
+      playerAction = 1;
+    }
+  }
+  
+  private void navigateInventory() {
+    if (keyPressed.get(KeyboardKey.LEFT) && !flagPressed) {
+      selectedItem -= 1; flagPressed = true;
+    }
+    else if (keyPressed.get(KeyboardKey.RIGHT) && !flagPressed) {
+      selectedItem += 1; flagPressed = true;
+    }
+    else if (keyPressed.get(KeyboardKey.DOWN) && !flagPressed) {
+      selectedItem += 5; flagPressed = true;
+    }
+    else if (keyPressed.get(KeyboardKey.UP) && !flagPressed) {
+      selectedItem -= 5; flagPressed = true;
+    }
+    
+    selectedItem = (selectedItem < 0) ? 10 + selectedItem : selectedItem;
+    selectedItem %= 10;
   }
   
   public void handleEvent(Panel panel, GameParameter parameters, ApplicationContext context) {
     getEvent(context);
     
-    handlePlayerMovement(panel, parameters);
-    
-    if (keyPressed.get(KeyboardKey.SPACE)) {
-      handleSpaceBarAction(panel, parameters);      
+    if (playerAction == 0 && !flagPressed) {
+      handlePlayerMovement(panel, parameters);
+      handleSpaceBarAction(panel);
+      handleInventoryButton(panel);
+    } else if (playerAction == 1) {
+      navigateInventory();
+      if (keyPressed.get(KeyboardKey.SPACE)) {
+        if (selectedItem < panel.getPlayer().getInventory().getSize()) panel.getPlayer().getInventory().swapItems(0, selectedItem);
+        playerAction = 0;
+        flagPressed = true;
+      }
     }
     
     if (keyPressed.get(KeyboardKey.Q)) {
@@ -100,4 +143,11 @@ public class UserEvent {
     }
   }
   
+  public int getPlayerAction() {
+    return playerAction;
+  }
+  
+  public int getSelectedItem() {
+    return selectedItem;
+  }
 }
