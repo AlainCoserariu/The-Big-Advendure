@@ -1,0 +1,72 @@
+<project name="TheBigAdventure" default="jar" basedir=".">
+
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="classes"/>
+    <property name="docs.dir" value="docs"/>
+    <property name="javadoc.dir" value="${docs.dir}/api"/>
+    <property name="main-class" value="fr.uge.main.Main"/>
+
+    <path id="classpath">
+        <pathelement path="lib/zen5.jar"/>
+    </path>
+
+	<!-- Clean classes directory -->
+    <target name="clean">
+        <delete dir="${classes.dir}"/>
+    	<mkdir dir="${classes.dir}"/>
+    	<delete file="Alves_Coserariu_TheBigAdventure.zip"/>
+    	<delete file="thebigadventure.jar"/>
+    </target>
+
+    <!-- Compile target -->
+    <target name="compile" depends="clean">
+    	<copy todir="${classes.dir}">
+    	  <fileset dir="resources"/>
+    	</copy>
+    	
+    	<copydir src="resources" dest="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Javadoc target -->
+    <target name="javadoc" depends="compile">
+        <mkdir dir="${javadoc.dir}"/>
+        <javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}">
+            <classpath refid="classpath"/>
+        </javadoc>
+    </target>
+
+    <!-- JAR target -->
+    <target name="jar" depends="compile">
+    	<delete file="thebigadventure.jar"/>
+        <jar destfile="thebigadventure.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            	<attribute name="Class-Path" value="lib/zen5.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Default target -->
+    <target name="default" depends="jar"/>
+	
+	<target name="zip">
+		<antcall target="javadoc"/>
+		<antcall target="clean"/>
+		<mkdir dir="../Alves_Coserariu_TheBigAdventure_cpy"/>
+		<mkdir dir="../Alves_Coserariu_TheBigAdventure_cpy/Alves_Coserariu_TheBigAdventure"/>
+		<copy todir="../Alves_Coserariu_TheBigAdventure_cpy/Alves_Coserariu_TheBigAdventure">
+		  <fileset dir="." excludes=".*"/>
+		</copy>
+		
+		<zip destfile="Alves_Coserariu_TheBigAdventure.zip">
+			<fileset dir="../Alves_Coserariu_TheBigAdventure_cpy"/>
+		</zip>
+		
+		<delete dir="../Alves_Coserariu_TheBigAdventure_cpy"/>
+	</target>
+
+</project>

@@ -6,6 +6,7 @@ import java.util.Objects;
 import fr.uge.enums.SkinPlayer;
 import fr.uge.gameEngine.fieldElement.FieldElement;
 import fr.uge.gameEngine.item.Food;
+import fr.uge.gameEngine.item.Inventory;
 import fr.uge.gameEngine.item.Item;
 import fr.uge.gameEngine.item.Weapon;
 import fr.uge.gameEngine.utility.Hitbox;

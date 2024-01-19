@@ -81,10 +81,10 @@ public class Display {
   /**
    * Display all elements in the game
    * 
-   * @param pan
-   * @param images
-   * @param context
-   * @param parameters
+   * @param pan panel
+   * @param images HashMap of all images used by the game
+   * @param context application context
+   * @param parameters Parameters representing the game (screen size, tile size...)
    */
   public static void allDisplay(Panel pan, Map<String, BufferedImage> images, ApplicationContext context,
       GameParameter parameters, UserEvent userEvent) {
@@ -105,15 +105,14 @@ public class Display {
   /**
    * Load all images in resources folder
    * 
-   * @param parameters
    * @return
    * @throws IOException
    */
   public static Map<String, BufferedImage> loadImage() throws IOException {
-    return Map.copyOf(Files.walk(Path.of("ressources"), 10, FileVisitOption.FOLLOW_LINKS)
+    return Map.copyOf(Files.walk(Path.of("resources"), 10, FileVisitOption.FOLLOW_LINKS)
         .filter(f -> f.getFileName().toString().endsWith(".png")) // Get all png files
         .collect(Collectors.toMap(s -> s.getFileName() // KeyMapper, transform path into game name element (i.e.
-                                                       // ressources/assets/obstacle/wall become WALL)
+                                                       // resources/assets/obstacle/wall become WALL)
             .toString()
             .substring(0, s.getFileName().toString().length() - ".png".length())
             .toUpperCase(Locale.ROOT), s -> { // ValueMapper

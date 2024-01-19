@@ -1,0 +1,10 @@
+fr.uge
+fr.uge.display
+fr.uge.enums
+fr.uge.gameEngine
+fr.uge.gameEngine.entity
+fr.uge.gameEngine.fieldElement
+fr.uge.gameEngine.item
+fr.uge.gameEngine.utility
+fr.uge.main
+fr.uge.parser

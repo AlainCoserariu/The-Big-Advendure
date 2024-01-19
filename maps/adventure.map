@@ -27,7 +27,7 @@
   E                                                                                          Z       E
   Q                                   D                                                      Z       E
   QR       DDD     EETET             DZZZl                                                 T Z       E
-  ZZZZZZZZZZZZZZZtZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ       E
+  KKZZZZZZZZZZZZZtZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ       E
   QQR                                            f                                                   E
   Q             S                                                                                    E
   Q                                                                                                  E
@@ -226,5 +226,3 @@
   skin: BED
   position: (44,45)
   kind: obstacle
-
-

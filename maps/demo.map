@@ -1,0 +1,124 @@
+[grid]
+size:(60x60)
+encodings: WALL(W) 
+data:"""
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+WWWWWWWWWWWWWWWWWWWW                    WWWWWWWWWWWWWWWWWWWW
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+WWWWWWWWWWWWWWWWWWWW                    WWWWWWWWWWWWWWWWWWWW
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+W                                                          W
+WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+"""
+
+[element]
+  name: Player
+  player: true
+  skin: BABA
+  position: (5,5)
+  health: 100
+  
+[element]
+  name: Sword
+  skin: SWORD
+  position: (10,35)
+  kind: item
+  damage: 15
+
+[element]
+  name: Stick
+  skin: STICK
+  position: (10,25)
+  kind: item
+  damage: 5
+  
+[element]
+  name: CakeIsALie
+  skin: CAKE
+  position: (50,25)
+  kind: item
+ 
+[element]
+  name: Banana
+  skin: BANANA
+  position: (50,30)
+  kind: item
+
+[element]
+  name: Donut
+  skin: DONUT
+  position: (50,35)
+  kind: item
+
+[element]
+  name: Enemyè^é
+  skin: CRAB
+  position: (20, 50)
+  kind: enemy
+  health: 10
+  zone: (10, 40) (20 x 20)
+  behavior: stroll
+  damage: 10
+
+[element]
+  name: Enemyè^é
+  skin: SKULL
+  position: (40, 50)
+  kind: enemy
+  health: 10
+  zone: (30, 40) (20 x 20)
+  behavior: stroll
+  damage: 10

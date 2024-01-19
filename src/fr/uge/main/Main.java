@@ -20,6 +20,17 @@ import fr.umlv.zen5.ScreenInfo;
 
 public class Main {
 
+  /**
+   * Handle the main loop for the game
+   * 
+   * @param panel
+   * @param images
+   * @param context
+   * @param gameParameters
+   * @param userInput
+   * @param options
+   * @throws InterruptedException
+   */
   private static void gameLoop(Panel panel, Map<String, BufferedImage> images, ApplicationContext context,
       GameParameter gameParameters, UserEvent userInput, Options options) throws InterruptedException {
     while (true) {
@@ -38,6 +49,14 @@ public class Main {
     }
   }
 
+  /**
+   * Run the context application
+   * 
+   * @param panel
+   * @param images
+   * @param userInput
+   * @param options
+   */
   private static void application(Panel panel, Map<String, BufferedImage> images, UserEvent userInput, Options options) {
     Application.run(Color.BLACK, context -> {
       // get the size of the screen
@@ -58,6 +77,13 @@ public class Main {
     });
   }
   
+  /**
+   * Initialize game variable and start the main loop if map file exist and contain 0 errors
+   * 
+   * @param map
+   * @param options
+   * @throws IOException
+   */
   private static void game(String map, Options options) throws IOException {
     Panel panel;
     try {

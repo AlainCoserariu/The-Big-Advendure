@@ -93,8 +93,9 @@ public class UserEvent {
   }
   
   private void handleSpaceBarAction(Panel panel) {
-    if (keyPressed.get(KeyboardKey.SPACE)) {
+    if (keyPressed.get(KeyboardKey.SPACE) && !flagPressed) {
       panel.getPlayer().action();
+      flagPressed = true;
     }
   }
   
@@ -125,13 +126,13 @@ public class UserEvent {
   public void handleEvent(Panel panel, GameParameter parameters, ApplicationContext context) {
     getEvent(context);
     
-    if (playerAction == 0 && !flagPressed) {
+    if (playerAction == 0) {
       handlePlayerMovement(panel, parameters);
       handleSpaceBarAction(panel);
       handleInventoryButton(panel);
     } else if (playerAction == 1) {
       navigateInventory();
-      if (keyPressed.get(KeyboardKey.SPACE)) {
+      if (keyPressed.get(KeyboardKey.SPACE) && !flagPressed) {
         if (selectedItem < panel.getPlayer().getInventory().getSize()) panel.getPlayer().getInventory().swapItems(0, selectedItem);
         playerAction = 0;
         flagPressed = true;
